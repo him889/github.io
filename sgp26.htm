@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data SGP Pools 2026</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json,{
+        %22name%22:%22Data%20SGP%20Pools%202026%22,
+        %22short_name%22:%22SGP%202026%22,
+        %22start_url%22:%22.%22,
+        %22display%22:%22standalone%22,
+        %22background_color%22:%22%23121212%22,
+        %22theme_color%22:%22%234CAF50%22,
+        %22icons%22:[{
+            %22src%22:%22https://via.placeholder.com/192x192.png?text=SGP%22,
+            %22sizes%22:%22192x192%22,
+            %22type%22:%22image/png%22
+        },{
+            %22src%22:%22https://via.placeholder.com/512x512.png?text=SGP%22,
+            %22sizes%22:%22512x512%22,
+            %22type%22:%22image/png%22
+        }]
+    }">
+    <meta name="theme-color" content="#4CAF50">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            margin: 0;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #4CAF50 0%, #9C27B0 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 2.8em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .subtitle {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+            padding: 20px;
+            overflow: hidden;
+        }
+        .form-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .link-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .link-button {
+            padding: 8px 16px;
+            font-size: 0.9em;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .link-button:hover {
+            transform: scale(1.05);
+        }
+        .sdy-button { background-color: #4CAF50; }
+        .sdy-button:hover { background-color: #388E3C; }
+        .sdy-lotto-button { background-color: #FF9800; }
+        .sdy-lotto-button:hover { background-color: #F57C00; }
+        .sgp-button { background-color: #2196F3; }
+        .sgp-button:hover { background-color: #1976D2; }
+        .hk-button { background-color: #FF5722; }
+        .hk-button:hover { background-color: #E64A19; }
+        .hklive-button { background-color: #9C27B0; }
+        .hklive-button:hover { background-color: #7B1FA2; }
+        .form-container input {
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #262626;
+            color: #e0e0e0;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            background-color: #4CAF50;
+        }
+        .form-container button:hover {
+            background-color: #388E3C;
+        }
+        .error {
+            color: #ff4444;
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+        .sdy-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-family: Arial, sans-serif;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #000000;
+        }
+        .sdy-table th, .sdy-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-right: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+        .sdy-table th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .sdy-table td {
+            font-size: 1.2em;
+            background-color: #1a1a1a;
+        }
+        .sdy-table tr:nth-child(even) td {
+            background-color: #262626;
+        }
+        .sdy-table tr:hover td {
+            background-color: #9C27B0;
+            color: #fff;
+        }
+        .sdy-table th:last-child, .sdy-table td:last-child {
+            border-right: none;
+        }
+        .sdy-table tr:last-child td {
+            border-bottom: none;
+        }
+        .sdy-table td:nth-child(1) {
+            color: #9C27B0;
+        }
+        .sdy-table td:nth-child(2) {
+            color: #00FF00;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #9C27B0;
+            font-style: italic;
+            font-size: 0.9em;
+            position: relative;
+            padding-bottom: 80px;
+        }
+        .top-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.8;
+        }
+        .top-button:hover {
+            background-color: #388E3C;
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1e1e1e;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 999;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .bottom-bar button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .bottom-bar button:hover {
+            background-color: #388E3C;
+        }
+        .mini-player {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(145deg, #0d0d0d, #2a2a2a);
+            border-radius: 30px;
+            padding: 6px 12px;
+            box-shadow: 0 0 15px rgba(156, 39, 176, 0.4);
+            border: 1px solid rgba(156, 39, 176, 0.3);
+            gap: 8px;
+        }
+        .mini-player button {
+            background: transparent;
+            color: #9C27B0;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+        .mini-player button:hover {
+            color: #ffffff;
+            background: rgba(156, 39, 176, 0.5);
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(156, 39, 176, 0.6);
+        }
+        .player-status {
+            font-size: 0.75em;
+            color: #9C27B0;
+            min-width: 60px;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(156, 39, 176, 0.5);
+        }
+        .glow-play::before { content: "▶"; }
+        .glow-pause::before { content: "‖"; }
+        .glow-stop::before { content: "■"; }
+        @media (max-width: 600px) {
+            .bottom-bar { flex-direction: column; padding: 8px 0; }
+            .mini-player { padding: 6px 10px; }
+            .top-button { bottom: 80px; }
+        }
+    </style>
+</head>
+<body id="top">
+    <div class="container">
+        <div class="header">
+            <h1>Data SGP Pools 2026</h1>
+            <div class="subtitle">by: him's</div>
+        </div>
+
+        <div class="link-buttons">
+            <a href="sdy26.htm" class="link-button sdy-button">SDY</a>
+            <a href="sdyl26.htm" class="link-button sdy-lotto-button">SDY Lotto</a>
+            <a href="hk26.htm" class="link-button hk-button">HK</a>
+            <a href="hkl26.htm" class="link-button hklive-button">HK Lotto</a>
+        </div>
+
+        <div class="form-container">
+            <form id="dataForm">
+                <input type="text" id="dateInput" placeholder="Tanggal (DD/MM/YY)">
+                <input type="text" id="numberInput" placeholder="Nomor (4 digit)">
+                <button type="submit">Tambah Data</button>
+            </form>
+        </div>
+        <div id="errorMessage" class="error"></div>
+
+        <table class="sdy-table">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Nomor</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="dataTableBody"></tbody>
+        </table>
+
+        <div class="footer">Data SGP Pools 2026 ®Him's</div>
+    </div>
+
+    <button class="top-button" onclick="scrollToTop()">Top</button>
+
+    <div class="bottom-bar">
+        <button onclick="shareData()">Bagikan Data</button>
+        <button onclick="downloadText()">Download TXT</button>
+        <button onclick="downloadCSV()">Download CSV</button>
+        <div class="mini-player">
+            <button class="glow-play" onclick="playMusic()" title="Play"></button>
+            <button class="glow-pause" onclick="pauseMusic()" title="Pause"></button>
+            <button class="glow-stop" onclick="stopMusic()" title="Stop"></button>
+            <span class="player-status" id="playerStatus">Stopped</span>
+        </div>
+    </div>
+
+    <audio id="musicPlayer" preload="none">
+        <source src="https://him37.wuaze.com/indo/hanya-rindu.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung audio.
+    </audio>
+
+    <script>
+        const STORAGE_KEY = 'sgp26_data_2026';
+
+        function scrollToTop() {
+            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+            document.body.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        let editRowIndex = null;
+
+        // === DATA BARU ===
+        const initialData = [
+            { date: "27/04/26", number: "4020" },
+            { date: "26/04/26", number: "7937" },
+            { date: "25/04/26", number: "9950" },
+            { date: "23/04/26", number: "0053" },
+            { date: "22/04/26", number: "2791" },
+            { date: "20/04/26", number: "4620" },
+            { date: "19/04/26", number: "9815" },
+            { date: "18/04/26", number: "8953" },
+            { date: "16/04/26", number: "9344" },
+            { date: "15/04/26", number: "3873" },
+            { date: "13/04/26", number: "8145" },
+            { date: "12/04/26", number: "2218" },
+            { date: "11/04/26", number: "8025" },
+            { date: "09/04/26", number: "8395" },
+            { date: "08/04/26", number: "7195" },
+            { date: "06/04/26", number: "2916" },
+            { date: "05/04/26", number: "8866" },
+            { date: "04/04/26", number: "7752" },
+            { date: "02/04/26", number: "5391" },
+            { date: "01/04/26", number: "4450" },
+            { date: "30/03/26", number: "8685" },
+            { date: "29/03/26", number: "2069" },
+            { date: "28/03/26", number: "8750" },
+            { date: "26/03/26", number: "9280" },
+            { date: "25/03/26", number: "2729" },
+            { date: "23/03/26", number: "3641" },
+            { date: "22/03/26", number: "8649" },
+            { date: "21/03/26", number: "0143" },
+            { date: "19/03/26", number: "1337" },
+            { date: "18/03/26", number: "8312" },
+            { date: "16/03/26", number: "2733" },
+            { date: "15/03/26", number: "5747" },
+            { date: "14/03/26", number: "5409" },
+            { date: "12/03/26", number: "8361" },
+            { date: "11/03/26", number: "7905" },
+            { date: "09/03/26", number: "7754" },
+            { date: "08/03/26", number: "0473" },
+            { date: "07/03/26", number: "4146" },
+            { date: "05/03/26", number: "7788" },
+            { date: "04/03/26", number: "4299" },
+            { date: "02/03/26", number: "6823" },
+            { date: "01/03/26", number: "3927" },
+            { date: "28/02/26", number: "4172" },
+            { date: "27/02/26", number: "9852" },
+            { date: "25/02/26", number: "1516" },
+            { date: "23/02/26", number: "6923" },
+            { date: "22/02/26", number: "1903" },
+            { date: "21/02/26", number: "5888" },
+            { date: "19/02/26", number: "3291" },
+            { date: "18/02/26", number: "4118" },
+            { date: "16/02/26", number: "2132" },
+            { date: "15/02/26", number: "4198" },
+            { date: "14/02/26", number: "9651" },
+            { date: "13/02/26", number: "0819" },
+            { date: "11/02/26", number: "5878" },
+            { date: "09/02/26", number: "4405" },
+            { date: "08/02/26", number: "2916" },
+            { date: "07/02/26", number: "1516" },
+            { date: "05/02/26", number: "2267" },
+            { date: "04/02/26", number: "7541" },
+            { date: "02/02/26", number: "9763" },
+            { date: "01/02/26", number: "7970" },
+            { date: "31/01/26", number: "2490" },
+            { date: "29/01/26", number: "9384" },
+            { date: "28/01/26", number: "9683" },
+            { date: "26/01/26", number: "4857" },
+            { date: "25/01/26", number: "4025" },
+            { date: "24/01/26", number: "7295" },
+            { date: "22/01/26", number: "9905" },
+            { date: "21/01/26", number: "0452" },
+            { date: "19/01/26", number: "2459" },
+            { date: "18/01/26", number: "5896" },
+            { date: "17/01/26", number: "3236" },
+            { date: "15/01/26", number: "6145" },
+            { date: "14/01/26", number: "0305" },
+            { date: "12/01/26", number: "5312" },
+            { date: "11/01/26", number: "3283" },
+            { date: "10/01/26", number: "2038" },
+            { date: "08/01/26", number: "9203" },
+            { date: "07/01/26", number: "4807" },
+            { date: "05/01/26", number: "5949" },
+            { date: "04/01/26", number: "3734" },
+            { date: "03/01/26", number: "3310" },
+            { date: "02/01/26", number: "8000" }
+        ];
+
+        function initializeData() {
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            if (savedData.length === 0) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
+            }
+            loadData();
+        }
+
+        function isValidDate(dateStr) {
+            const [day, month, year] = dateStr.split('/').map(Number);
+            const date = new Date(`20${year}`, month - 1, day);
+            return (
+                date.getDate() === day &&
+                date.getMonth() === month - 1 &&
+                date.getFullYear() === 2000 + year
+            );
+        }
+
+        function loadData() {
+            const tableBody = document.getElementById('dataTableBody');
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || initialData;
+
+            savedData.sort((a, b) => {
+                const dateA = new Date(`20${a.date.slice(6, 8)}`, a.date.slice(3, 5) - 1, a.date.slice(0, 2));
+                const dateB = new Date(`20${b.date.slice(6, 8)}`, b.date.slice(3, 5) - 1, b.date.slice(0, 2));
+                return dateB - dateA;
+            });
+
+            tableBody.innerHTML = '';
+
+            savedData.forEach((data, index) => {
+                if (data.date && data.number) {
+                    addRowToTable(data.date, data.number, index);
+                }
+            });
+        }
+
+        function addRowToTable(date, number, index) {
+            const tableBody = document.getElementById('dataTableBody');
+            const newRow = document.createElement('tr');
+            newRow.setAttribute('data-index', index);
+            newRow.innerHTML = `
+                <td>${date}</td>
+                <td>${number}</td>
+                <td>
+                    <button class="edit-button" onclick="editRow(${index})">Edit</button>
+                    <button class="delete-button" onclick="deleteRow(${index})">Hapus</button>
+                </td>
+            `;
+            tableBody.appendChild(newRow);
+        }
+
+        function addData() {
+            const dateInput = document.getElementById('dateInput').value.trim();
+            const numberInput = document.getElementById('numberInput').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+
+            const datePattern = /^\d{2}\/\d{2}\/\d{2}$/;
+            if (!datePattern.test(dateInput) || !isValidDate(dateInput)) {
+                errorMessage.textContent = 'Masukkan tanggal yang valid dalam format DD/MM/YY';
+                errorMessage.style.display = 'block';
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+                return;
+            }
+
+            const numberPattern = /^\d{4}$/;
+            if (!numberPattern.test(numberInput)) {
+                errorMessage.textContent = 'Masukkan nomor 4 digit angka';
+                errorMessage.style.display = 'block';
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+                return;
+            }
+
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            savedData.push({ date: dateInput, number: numberInput });
+
+            savedData.sort((a, b) => {
+                const dateA = new Date(`20${a.date.slice(6, 8)}`, a.date.slice(3, 5) - 1, a.date.slice(0, 2));
+                const dateB = new Date(`20${b.date.slice(6, 8)}`, b.date.slice(3, 5) - 1, b.date.slice(0, 2));
+                return dateB - dateA;
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            loadData();
+
+            document.getElementById('dateInput').value = '';
+            document.getElementById('numberInput').value = '';
+        }
+
+        function editRow(index) {
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const dataToEdit = savedData[index];
+
+            document.getElementById('dateInput').value = dataToEdit.date;
+            document.getElementById('numberInput').value = dataToEdit.number;
+
+            editRowIndex = index;
+            const submitButton = document.querySelector('#dataForm button[type="submit"]');
+            submitButton.textContent = 'Simpan Edit';
+        }
+
+        function saveEdit() {
+            const dateInput = document.getElementById('dateInput').value.trim();
+            const numberInput = document.getElementById('numberInput').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+
+            const datePattern = /^\d{2}\/\d{2}\/\d{2}$/;
+            if (!datePattern.test(dateInput) || !isValidDate(dateInput)) {
+                errorMessage.textContent = 'Masukkan tanggal yang valid dalam format DD/MM/YY';
+                errorMessage.style.display = 'block';
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+                return;
+            }
+
+            const numberPattern = /^\d{4}$/;
+            if (!numberPattern.test(numberInput)) {
+                errorMessage.textContent = 'Masukkan nomor 4 digit angka';
+                errorMessage.style.display = 'block';
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+                return;
+            }
+
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            savedData[editRowIndex] = { date: dateInput, number: numberInput };
+
+            savedData.sort((a, b) => {
+                const dateA = new Date(`20${a.date.slice(6, 8)}`, a.date.slice(3, 5) - 1, a.date.slice(0, 2));
+                const dateB = new Date(`20${b.date.slice(6, 8)}`, b.date.slice(3, 5) - 1, b.date.slice(0, 2));
+                return dateB - dateA;
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            loadData();
+
+            document.getElementById('dateInput').value = '';
+            document.getElementById('numberInput').value = '';
+
+            const submitButton = document.querySelector('#dataForm button[type="submit"]');
+            submitButton.textContent = 'Tambah Data';
+            editRowIndex = null;
+        }
+
+        function deleteRow(index) {
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            savedData.splice(index, 1);
+
+            savedData.sort((a, b) => {
+                const dateA = new Date(`20${a.date.slice(6, 8)}`, a.date.slice(3, 5) - 1, a.date.slice(0, 2));
+                const dateB = new Date(`20${b.date.slice(6, 8)}`, b.date.slice(3, 5) - 1, b.date.slice(0, 2));
+                return dateB - dateA;
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            loadData();
+        }
+
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (editRowIndex !== null) {
+                saveEdit();
+            } else {
+                addData();
+            }
+        });
+
+        function shareData() {
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || initialData;
+            let text = 'Data SGP Pools 2026\n\nTanggal - Nomor\n';
+
+            savedData.forEach(item => {
+                text += `${item.date} - ${item.number}\n`;
+            });
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Data SGP Pools 2026',
+                    text: text
+                }).catch(err => console.log('Error sharing', err));
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Data telah disalin ke clipboard! Tempel di aplikasi chat untuk bagikan.');
+                }).catch(() => {
+                    alert('Fitur share tidak didukung. Data:\n\n' + text);
+                });
+            }
+        }
+
+        function downloadText() {
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || initialData;
+            let text = 'Data SGP Pools 2026\n\nTanggal\tNomor\n';
+
+            savedData.forEach(item => {
+                text += `${item.date}\t${item.number}\n`;
+            });
+
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data_sgp_2026.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadCSV() {
+            let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || initialData;
+            let csv = 'Tanggal,Nomor\n';
+
+            savedData.forEach(item => {
+                csv += `${item.date},${item.number}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data_sgp_2026.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        const audio = document.getElementById('musicPlayer');
+        const status = document.getElementById('playerStatus');
+
+        function playMusic() {
+            audio.play();
+            status.textContent = 'Playing ♪';
+        }
+
+        function pauseMusic() {
+            audio.pause();
+            status.textContent = 'Paused';
+        }
+
+        function stopMusic() {
+            audio.pause();
+            audio.currentTime = 0;
+            status.textContent = 'Stopped';
+        }
+
+        audio.addEventListener('ended', () => {
+            status.textContent = 'Stopped';
+        });
+
+        window.onload = function() {
+            initializeData();
+        };
+    </script>
+</body>
+</html>
