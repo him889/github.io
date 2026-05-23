@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Data SGP Pools 2025</title>
+
+    <!-- PWA Manifest -->
+
+    <link rel="manifest" href="data:application/manifest+json,{
+
+        %22name%22:%22Data%20SGP%20Pools%202025%22,
+
+        %22short_name%22:%22SGP%202025%22,
+
+        %22start_url%22:%22.%22,
+
+        %22display%22:%22standalone%22,
+
+        %22background_color%22:%22%23121212%22,
+
+        %22theme_color%22:%22%234CAF50%22,
+
+        %22icons%22:[{
+
+            %22src%22:%22https://via.placeholder.com/192x192.png?text=SGP%22  ,
+
+            %22sizes%22:%22192x192%22,
+
+            %22type%22:%22image/png%22
+
+        },{
+
+            %22src%22:%22https://via.placeholder.com/512x512.png?text=SGP%22  ,
+
+            %22sizes%22:%22512x512%22,
+
+            %22type%22:%22image/png%22
+
+        }]
+
+    }">
+
+    <meta name="theme-color" content="#4CAF50">
+
+    <style>
+
+        body {
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            background-color: #121212;
+
+            margin: 0;
+
+            padding: 20px;
+
+            color: #e0e0e0;
+
+        }
+
+        .header {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+            padding: 20px 0;
+
+            background: linear-gradient(135deg, #2196F3 0%, #9C27B0 100%);
+
+            color: white;
+
+            border-radius: 10px;
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+
+        }
+
+        h1 {
+
+            font-size: 2.8em;
+
+            margin: 0;
+
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+        }
+
+        .subtitle {
+
+            font-style: italic;
+
+            opacity: 0.9;
+
+        }
+
+        .container {
+
+            max-width: 800px;
+
+            margin: 0 auto;
+
+            background-color: #1e1e1e;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+
+            padding: 20px;
+
+            overflow: hidden;
+
+        }
+
+        .link-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .link-button {
+
+            padding: 8px 16px;
+
+            font-size: 0.9em;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            transition: background-color 0.3s, transform 0.2s;
+
+        }
+
+        .link-button:hover {
+
+            transform: scale(1.05);
+
+        }
+
+        .sgp-button { background-color: #2196F3; }
+
+        .sgp-button:hover { background-color: #1976D2; }
+
+        .hk-button { background-color: #FF5722; }
+
+        .hk-button:hover { background-color: #E64A19; }
+
+        .hklive-button { background-color: #9C27B0; }
+
+        .hklive-button:hover { background-color: #7B1FA2; }
+
+        .sdy-lotto-button { background-color: #FFEB3B; color: black; }
+
+        .sdy-lotto-button:hover { background-color: #FDD835; }
+
+        .form-container, .search-container {
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            gap: 10px;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+        }
+
+        .search-container input {
+
+            padding: 10px;
+
+            font-size: 1em;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background-color: #262626;
+
+            color: #e0e0e0;
+
+            width: 200px;
+
+        }
+
+        .form-container input {
+
+            padding: 10px;
+
+            font-size: 1em;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background-color: #262626;
+
+            color: #e0e0e0;
+
+        }
+
+        .form-container button {
+
+            padding: 10px 20px;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: background-color 0.3s;
+
+            background-color: #4CAF50;
+
+        }
+
+        .form-container button:hover {
+
+            background-color: #388E3C;
+
+        }
+
+        .error {
+
+            color: #ff4444;
+
+            font-size: 0.9em;
+
+            text-align: center;
+
+            margin-top: 10px;
+
+            display: none;
+
+        }
+
+        .sdy-table {
+
+            width: 100%;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            font-family: Arial, sans-serif;
+
+            margin: 20px 0;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            background-color: #000000;
+
+        }
+
+        .sdy-table th, .sdy-table td {
+
+            padding: 12px 15px;
+
+            text-align: center;
+
+            border-right: 1px solid #333;
+
+            border-bottom: 1px solid #333;
+
+        }
+
+        .sdy-table th {
+
+            background-color: #2196F3;
+
+            color: white;
+
+            font-weight: bold;
+
+            font-size: 1.1em;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+        .sdy-table td {
+
+            font-size: 1.2em;
+
+            background-color: #1a1a1a;
+
+        }
+
+        .sdy-table tr:nth-child(even) td {
+
+            background-color: #262626;
+
+        }
+
+        .sdy-table tr:hover td {
+
+            background-color: #9C27B0;
+
+            color: #fff;
+
+        }
+
+        .sdy-table th:last-child, .sdy-table td:last-child {
+
+            border-right: none;
+
+        }
+
+        .sdy-table tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+        .sdy-table td:nth-child(1) { color: #9C27B0; }
+
+        .sdy-table td:nth-child(2) { color: #00FF00; }
+
+        .sdy-table button.edit-button {
+
+            background-color: #9C27B0;
+
+            color: white;
+
+            border: none;
+
+            padding: 6px 12px;
+
+            font-size: 0.9em;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            margin-right: 5px;
+
+        }
+
+        .sdy-table button.edit-button:hover { background-color: #7B1FA2; }
+
+        .sdy-table button.delete-button {
+
+            background-color: #8BC34A;
+
+            color: white;
+
+            border: none;
+
+            padding: 6px 12px;
+
+            font-size: 0.9em;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+        }
+
+        .sdy-table button.delete-button:hover { background-color: #689F38; }
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 30px;
+
+            color: #9C27B0;
+
+            font-style: italic;
+
+            font-size: 0.9em;
+
+            position: relative;
+
+            padding-bottom: 80px;
+
+        }
+
+        .top-button {
+
+            position: fixed;
+
+            bottom: 80px;
+
+            right: 20px;
+
+            padding: 10px 20px;
+
+            background-color: #4CAF50;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: background-color 0.3s, transform 0.2s, opacity 0.3s;
+
+            z-index: 1000;
+
+            opacity: 0.8;
+
+        }
+
+        .top-button:hover {
+
+            background-color: #388E3C;
+
+            transform: scale(1.05);
+
+            opacity: 1;
+
+        }
+
+        .bottom-bar {
+
+            position: fixed;
+
+            bottom: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            background-color: #1e1e1e;
+
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+
+            display: flex;
+
+            justify-content: space-around;
+
+            align-items: center;
+
+            padding: 10px 0;
+
+            z-index: 999;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+        }
+
+        .bottom-bar button {
+
+            padding: 8px 16px;
+
+            background-color: #4CAF50;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: background-color 0.3s;
+
+        }
+
+        .bottom-bar button:hover {
+
+            background-color: #388E3C;
+
+        }
+
+        .mini-player {
+
+            display: flex;
+
+            align-items: center;
+
+            background: linear-gradient(145deg, #0d0d0d, #2a2a2a);
+
+            border-radius: 30px;
+
+            padding: 6px 12px;
+
+            box-shadow: 0 0 15px rgba(156, 39, 176, 0.4);
+
+            border: 1px solid rgba(156, 39, 176, 0.3);
+
+            gap: 8px;
+
+        }
+
+        .mini-player button {
+
+            background: transparent;
+
+            color: #9C27B0;
+
+            border: none;
+
+            font-size: 1.2em;
+
+            cursor: pointer;
+
+            transition: all 0.3s;
+
+            padding: 4px 8px;
+
+            border-radius: 50%;
+
+        }
+
+        .mini-player button:hover {
+
+            color: #ffffff;
+
+            background: rgba(156, 39, 176, 0.5);
+
+            transform: scale(1.1);
+
+            box-shadow: 0 0 10px rgba(156, 39, 176, 0.6);
+
+        }
+
+        .player-status {
+
+            font-size: 0.75em;
+
+            color: #9C27B0;
+
+            min-width: 60px;
+
+            text-align: center;
+
+            text-shadow: 0 0 5px rgba(156, 39, 176, 0.5);
+
+        }
+
+        @media (max-width: 600px) {
+
+            .bottom-bar { flex-direction: column; padding: 8px 0; }
+
+            .mini-player { padding: 6px 10px; }
+
+            .top-button { bottom: 80px; }
+
+        }
+
+    </style>
+
+</head>
+
+<body id="top">
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>Data SGP Pools 2025</h1>
+
+            <div class="subtitle">by: him's</div>
+
+        </div>
+
+        <div class="link-buttons">
+
+            
+
+            <a href="https://him37.wuaze.com/2025/hk25.htm" class="link-button hk-button">HK</a>
+
+            <a href="https://him37.wuaze.com/2025/hkl25.htm" class="link-button hklive-button">HK Lotto</a>
+
+            <a href="https://him37.wuaze.com/2025/sdy25.htm" class="link-button sdy-lotto-button">SDY Pools</a>
+
+        </div>
+
+        <!-- Search Bar -->
+
+        <div class="search-container">
+
+            <input type="text" id="searchInput" placeholder="Cari tanggal atau nomor...">
+
+        </div>
+
+        <div class="form-container">
+
+            <form id="dataForm">
+
+                <input type="text" id="dateInput" placeholder="Tanggal (DD/MM/YY)">
+
+                <input type="text" id="numberInput" placeholder="Nomor (4 digit)">
+
+                <button type="submit">Tambah Data</button>
+
+            </form>
+
+        </div>
+
+        <div id="errorMessage" class="error"></div>
+
+        <table class="sdy-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Tanggal</th>
+
+                    <th>Nomor</th>
+
+                    <th>Aksi</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="dataTableBody"></tbody>
+
+        </table>
+
+        <div class="footer">
+
+            Data SGP Pools 2025 ®Him's
+
+        </div>
+
+    </div>
+
+    <button class="top-button" onclick="scrollToTop()">Top</button>
+
+    <div class="bottom-bar">
+
+        <button onclick="shareData()">Bagikan Data</button>
+
+        <button onclick="downloadText()">Download TXT</button>
+
+        <button onclick="downloadCSV()">Download CSV</button>
+
+        <div class="mini-player">
+
+            <button class="glow-play" onclick="playMusic()" title="Play">▶</button>
+
+            <button class="glow-pause" onclick="pauseMusic()" title="Pause">‖</button>
+
+            <button class="glow-stop" onclick="stopMusic()" title="Stop">■</button>
+
+            <span class="player-status" id="playerStatus">Stopped</span>
+
+        </div>
+
+    </div>
+
+    <audio id="musicPlayer" preload="none">
+
+        <source src="https://him37.wuaze.com/indo/hanya-rindu.mp3" type="audio/mpeg">
+
+        Browser Anda tidak mendukung audio.
+
+    </audio>
+
+    <script>
+
+        function scrollToTop() {
+
+            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+
+            document.body.scrollTo({ top: 0, behavior: 'smooth' });
+
+        }
+
+        let editRowIndex = null;
+
+        const initialData = [
+
+            { date: "31/12/25", number: "7136" },
+
+            { date: "29/12/25", number: "6444" },
+
+            { date: "28/12/25", number: "9507" },
+
+            { date: "27/12/25", number: "7308" },
+
+            { date: "25/12/25", number: "3571" },
+
+            { date: "24/12/25", number: "9395" },
+
+            { date: "22/12/25", number: "8698" },
+
+            { date: "21/12/25", number: "5263" },
+
+            { date: "20/12/25", number: "3114" },
+
+            { date: "18/12/25", number: "9152" },
+
+            { date: "17/12/25", number: "8391" },
+
+            { date: "15/12/25", number: "3298" },
+
+            { date: "14/12/25", number: "2056" },
+
+            { date: "13/12/25", number: "8789" },
+
+            { date: "11/12/25", number: "1149" },
+
+            { date: "10/12/25", number: "1912" },
+
+            { date: "08/12/25", number: "7055" },
+
+            { date: "07/12/25", number: "2508" },
+
+            { date: "06/12/25", number: "1419" },
+
+            { date: "04/12/25", number: "9798" },
+
+            { date: "03/12/25", number: "7331" },
+
+            { date: "01/12/25", number: "4016" },
+
+            { date: "30/11/25", number: "3393" },
+
+            { date: "29/11/25", number: "7352" },
+
+            { date: "27/11/25", number: "5038" },
+
+            { date: "26/11/25", number: "1434" },
+
+            { date: "24/11/25", number: "2936" },
+
+            { date: "23/11/25", number: "2755" },
+
+            { date: "22/11/25", number: "8590" },
+
+            { date: "20/11/25", number: "5825" },
+
+            { date: "19/11/25", number: "9551" },
+
+            { date: "17/11/25", number: "1777" },
+
+            { date: "16/11/25", number: "1396" },
+
+            { date: "15/11/25", number: "8862" },
+
+            { date: "13/11/25", number: "1655" },
+
+            { date: "12/11/25", number: "9223" },
+
+            { date: "10/11/25", number: "3488" },
+
+            { date: "09/11/25", number: "7499" },
+
+            { date: "08/11/25", number: "6456" },
+
+            { date: "06/11/25", number: "4103" },
+
+            { date: "05/11/25", number: "0180" },
+
+            { date: "03/11/25", number: "1316" },
+
+            { date: "02/11/25", number: "8989" },
+
+            { date: "01/11/25", number: "4326" },
+
+            { date: "30/10/25", number: "6283" },
+
+            { date: "29/10/25", number: "3378" },
+
+            { date: "27/10/25", number: "6031" },
+
+            { date: "26/10/25", number: "0316" },
+
+            { date: "25/10/25", number: "8585" },
+
+            { date: "23/10/25", number: "1951" },
+
+            { date: "22/10/25", number: "8612" },
+
+            { date: "20/10/25", number: "3788" },
+
+            { date: "19/10/25", number: "5548" },
+
+            { date: "18/10/25", number: "6135" },
+
+            { date: "16/10/25", number: "2480" },
+
+            { date: "15/10/25", number: "7324" },
+
+            { date: "13/10/25", number: "4262" },
+
+            { date: "12/10/25", number: "1060" },
+
+            { date: "11/10/25", number: "3635" },
+
+            { date: "09/10/25", number: "3368" },
+
+            { date: "08/10/25", number: "8079" },
+
+            { date: "06/10/25", number: "7382" },
+
+            { date: "05/10/25", number: "4913" },
+
+            { date: "04/10/25", number: "5051" },
+
+            { date: "02/10/25", number: "8729" },
+
+            { date: "01/10/25", number: "0526" },
+
+            { date: "29/09/25", number: "8998" },
+
+            { date: "28/09/25", number: "5958" },
+
+            { date: "26/09/25", number: "4874" },
+
+            { date: "25/09/25", number: "5059" },
+
+            { date: "24/09/25", number: "3091" },
+
+            { date: "22/09/25", number: "7707" },
+
+            { date: "21/09/25", number: "3788" },
+
+            { date: "20/09/25", number: "4611" },
+
+            { date: "18/09/25", number: "7540" },
+
+            { date: "17/09/25", number: "8704" },
+
+            { date: "15/09/25", number: "4283" },
+
+            { date: "14/09/25", number: "8015" },
+
+            { date: "13/09/25", number: "9326" },
+
+            { date: "11/09/25", number: "4603" },
+
+            { date: "10/09/25", number: "7611" },
+
+            { date: "08/09/25", number: "6700" },
+
+            { date: "07/09/25", number: "7336" },
+
+            { date: "06/09/25", number: "3136" },
+
+            { date: "04/09/25", number: "3898" },
+
+            { date: "03/09/25", number: "9999" },
+
+            { date: "01/09/25", number: "2718" },
+
+            { date: "31/08/25", number: "7057" },
+
+            { date: "30/08/25", number: "9468" },
+
+            { date: "28/08/25", number: "7816" },
+
+            { date: "27/08/25", number: "6768" },
+
+            { date: "25/08/25", number: "7879" },
+
+            { date: "24/08/25", number: "9197" },
+
+            { date: "23/08/25", number: "2250" },
+
+            { date: "21/08/25", number: "5480" },
+
+            { date: "20/08/25", number: "0707" },
+
+            { date: "18/08/25", number: "2135" },
+
+            { date: "17/08/25", number: "7477" },
+
+            { date: "16/08/25", number: "4315" },
+
+            { date: "14/08/25", number: "4514" },
+
+            { date: "13/08/25", number: "3380" },
+
+            { date: "11/08/25", number: "5718" },
+
+            { date: "10/08/25", number: "4067" },
+
+            { date: "09/08/25", number: "8681" },
+
+            { date: "08/08/25", number: "3199" },
+
+            { date: "06/08/25", number: "9132" },
+
+            { date: "04/08/25", number: "2804" },
+
+            { date: "03/08/25", number: "9427" },
+
+            { date: "02/08/25", number: "0851" },
+
+            { date: "31/07/25", number: "9337" },
+
+            { date: "30/07/25", number: "8115" },
+
+            { date: "28/07/25", number: "0724" },
+
+            { date: "27/07/25", number: "7280" },
+
+            { date: "26/07/25", number: "0873" },
+
+            { date: "24/07/25", number: "5196" },
+
+            { date: "23/07/25", number: "9559" },
+
+            { date: "21/07/25", number: "5638" },
+
+            { date: "20/07/25", number: "4600" },
+
+            { date: "19/07/25", number: "4802" },
+
+            { date: "17/07/25", number: "5122" },
+
+            { date: "16/07/25", number: "9362" },
+
+            { date: "14/07/25", number: "7751" },
+
+            { date: "13/07/25", number: "8775" },
+
+            { date: "12/07/25", number: "3064" },
+
+            { date: "10/07/25", number: "7284" },
+
+            { date: "09/07/25", number: "0175" },
+
+            { date: "07/07/25", number: "2991" },
+
+            { date: "06/07/25", number: "2472" },
+
+            { date: "05/07/25", number: "0264" },
+
+            { date: "03/07/25", number: "1217" },
+
+            { date: "02/07/25", number: "5497" },
+
+            { date: "30/06/25", number: "8710" },
+
+            { date: "29/06/25", number: "7479" },
+
+            { date: "28/06/25", number: "4747" },
+
+            { date: "26/06/25", number: "4228" },
+
+            { date: "25/06/25", number: "6238" },
+
+            { date: "23/06/25", number: "4227" },
+
+            { date: "22/06/25", number: "9729" },
+
+            { date: "21/06/25", number: "4104" },
+
+            { date: "19/06/25", number: "7531" },
+
+            { date: "18/06/25", number: "0536" },
+
+            { date: "16/06/25", number: "5025" },
+
+            { date: "15/06/25", number: "5891" },
+
+            { date: "14/06/25", number: "8327" },
+
+            { date: "12/06/25", number: "5532" },
+
+            { date: "11/06/25", number: "8184" },
+
+            { date: "09/06/25", number: "1330" },
+
+            { date: "08/06/25", number: "3805" },
+
+            { date: "07/06/25", number: "4520" },
+
+            { date: "05/06/25", number: "0544" },
+
+            { date: "04/06/25", number: "7634" },
+
+            { date: "02/06/25", number: "0055" },
+
+            { date: "01/06/25", number: "5259" },
+
+            { date: "31/05/25", number: "9304" },
+
+            { date: "29/05/25", number: "2076" },
+
+            { date: "28/05/25", number: "9617" },
+
+            { date: "26/05/25", number: "4457" },
+
+            { date: "25/05/25", number: "0825" },
+
+            { date: "24/05/25", number: "1766" },
+
+            { date: "22/05/25", number: "2820" },
+
+            { date: "21/05/25", number: "3576" },
+
+            { date: "19/05/25", number: "2751" },
+
+            { date: "18/05/25", number: "0665" },
+
+            { date: "17/05/25", number: "6660" },
+
+            { date: "15/05/25", number: "3439" },
+
+            { date: "14/05/25", number: "8283" },
+
+            { date: "12/05/25", number: "6397" },
+
+            { date: "11/05/25", number: "8947" },
+
+            { date: "10/05/25", number: "0050" },
+
+            { date: "08/05/25", number: "0508" },
+
+            { date: "07/05/25", number: "2092" },
+
+            { date: "05/05/25", number: "6815" },
+
+            { date: "04/05/25", number: "5507" },
+
+            { date: "03/05/25", number: "6996" },
+
+            { date: "01/05/25", number: "0559" },
+
+            { date: "30/04/25", number: "4655" },
+
+            { date: "28/04/25", number: "0279" },
+
+            { date: "27/04/25", number: "4707" },
+
+            { date: "26/04/25", number: "0990" },
+
+            { date: "24/04/25", number: "0376" },
+
+            { date: "23/04/25", number: "4045" },
+
+            { date: "21/04/25", number: "7826" },
+
+            { date: "20/04/25", number: "7422" },
+
+            { date: "19/04/25", number: "8119" },
+
+            { date: "17/04/25", number: "3108" },
+
+            { date: "16/04/25", number: "0193" },
+
+            { date: "14/04/25", number: "3589" },
+
+            { date: "13/04/25", number: "5891" },
+
+            { date: "12/04/25", number: "1564" },
+
+            { date: "10/04/25", number: "3630" },
+
+            { date: "09/04/25", number: "8057" },
+
+            { date: "07/04/25", number: "4361" },
+
+            { date: "06/04/25", number: "1546" },
+
+            { date: "05/04/25", number: "1815" },
+
+            { date: "03/04/25", number: "9707" },
+
+            { date: "02/04/25", number: "3567" },
+
+            { date: "31/03/25", number: "9237" },
+
+            { date: "30/03/25", number: "8748" },
+
+            { date: "29/03/25", number: "8682" },
+
+            { date: "27/03/25", number: "9514" },
+
+            { date: "26/03/25", number: "3468" },
+
+            { date: "24/03/25", number: "4902" },
+
+            { date: "23/03/25", number: "4111" },
+
+            { date: "22/03/25", number: "4720" },
+
+            { date: "20/03/25", number: "1685" },
+
+            { date: "19/03/25", number: "9325" },
+
+            { date: "17/03/25", number: "9596" },
+
+            { date: "16/03/25", number: "9373" },
+
+            { date: "15/03/25", number: "5540" },
+
+            { date: "13/03/25", number: "0882" },
+
+            { date: "12/03/25", number: "6376" },
+
+            { date: "10/03/25", number: "9017" },
+
+            { date: "09/03/25", number: "4657" },
+
+            { date: "08/03/25", number: "0948" },
+
+            { date: "06/03/25", number: "8411" },
+
+            { date: "05/03/25", number: "8680" },
+
+            { date: "03/03/25", number: "0815" },
+
+            { date: "02/03/25", number: "7538" },
+
+            { date: "01/03/25", number: "5946" },
+
+            { date: "27/02/25", number: "3220" },
+
+            { date: "26/02/25", number: "5404" },
+
+            { date: "24/02/25", number: "5034" },
+
+            { date: "23/02/25", number: "6666" },
+
+            { date: "22/02/25", number: "7325" },
+
+            { date: "20/02/25", number: "6630" },
+
+            { date: "19/02/25", number: "3419" },
+
+            { date: "17/02/25", number: "9090" },
+
+            { date: "16/02/25", number: "7539" },
+
+            { date: "15/02/25", number: "9899" },
+
+            { date: "13/02/25", number: "1829" },
+
+            { date: "12/02/25", number: "7164" },
+
+            { date: "10/02/25", number: "0210" },
+
+            { date: "09/02/25", number: "3388" },
+
+            { date: "08/02/25", number: "9285" },
+
+            { date: "07/02/25", number: "0165" },
+
+            { date: "05/02/25", number: "2079" },
+
+            { date: "03/02/25", number: "1200" },
+
+            { date: "02/02/25", number: "9800" },
+
+            { date: "01/02/25", number: "8383" },
+
+            { date: "30/01/25", number: "2038" },
+
+            { date: "29/01/25", number: "0733" },
+
+            { date: "27/01/25", number: "8988" },
+
+            { date: "26/01/25", number: "2782" },
+
+            { date: "25/01/25", number: "1222" },
+
+            { date: "24/01/25", number: "8812" },
+
+            { date: "22/01/25", number: "5416" },
+
+            { date: "20/01/25", number: "1874" },
+
+            { date: "19/01/25", number: "3891" },
+
+            { date: "18/01/25", number: "9858" },
+
+            { date: "16/01/25", number: "1286" },
+
+            { date: "15/01/25", number: "5832" },
+
+            { date: "13/01/25", number: "8785" },
+
+            { date: "12/01/25", number: "8504" },
+
+            { date: "11/01/25", number: "5263" },
+
+            { date: "09/01/25", number: "6470" },
+
+            { date: "08/01/25", number: "8975" },
+
+            { date: "06/01/25", number: "3841" },
+
+            { date: "05/01/25", number: "5256" },
+
+            { date: "04/01/25", number: "2679" },
+
+            { date: "02/01/25", number: "5892" },
+
+            { date: "01/01/25", number: "7293" }
+
+        ];
+
+        function getLocalStorageKey() {
+
+            const pageName = window.location.pathname.split('/').pop();
+
+            return `${pageName.replace('.htm', '')}Data`;
+
+        }
+
+        const localStorageKey = getLocalStorageKey();
+
+        function initializeData() {
+
+            const savedData = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+
+            if (savedData.length === 0) {
+
+                localStorage.setItem(localStorageKey, JSON.stringify(initialData));
+
+            }
+
+            loadData();
+
+        }
+
+        function isValidDate(dateStr) {
+
+            const [day, month, year] = dateStr.split('/').map(Number);
+
+            const date = new Date(`20${year}`, month - 1, day);
+
+            return (
+
+                date.getDate() === day &&
+
+                date.getMonth() === month - 1 &&
+
+                date.getFullYear() === 2000 + year
+
+            );
+
+        }
+
+        function loadData(filter = '') {
+
+            const tableBody = document.getElementById('dataTableBody');
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || initialData;
+
+            savedData.sort((a, b) => {
+
+                const dateA = new Date(`20${a.date.slice(6,8)}`, a.date.slice(3,5)-1, a.date.slice(0,2));
+
+                const dateB = new Date(`20${b.date.slice(6,8)}`, b.date.slice(3,5)-1, b.date.slice(0,2));
+
+                return dateB - dateA;
+
+            });
+
+            tableBody.innerHTML = '';
+
+            savedData.forEach((data, index) => {
+
+                if (filter === '' || 
+
+                    data.date.toLowerCase().includes(filter.toLowerCase()) || 
+
+                    data.number.includes(filter)) {
+
+                    addRowToTable(data.date, data.number, index);
+
+                }
+
+            });
+
+        }
+
+        function addRowToTable(date, number, index) {
+
+            const tableBody = document.getElementById('dataTableBody');
+
+            const newRow = document.createElement('tr');
+
+            newRow.setAttribute('data-index', index);
+
+            newRow.innerHTML = `
+
+                <td>${date}</td>
+
+                <td>${number}</td>
+
+                <td>
+
+                    <button class="edit-button" onclick="editRow(${index})">Edit</button>
+
+                    <button class="delete-button" onclick="deleteRow(${index})">Hapus</button>
+
+                </td>
+
+            `;
+
+            tableBody.appendChild(newRow);
+
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+
+            const query = this.value.trim();
+
+            loadData(query);
+
+        });
+
+        function addData() {
+
+            const dateInput = document.getElementById('dateInput').value.trim();
+
+            const numberInput = document.getElementById('numberInput').value.trim();
+
+            const errorMessage = document.getElementById('errorMessage');
+
+            const datePattern = /^\d{2}\/\d{2}\/\d{2}$/;
+
+            if (!datePattern.test(dateInput) || !isValidDate(dateInput)) {
+
+                errorMessage.textContent = 'Masukkan tanggal yang valid dalam format DD/MM/YY';
+
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+
+                return;
+
+            }
+
+            const numberPattern = /^\d{4}$/;
+
+            if (!numberPattern.test(numberInput)) {
+
+                errorMessage.textContent = 'Masukkan nomor 4 digit angka';
+
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+
+                return;
+
+            }
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+
+            savedData.push({ date: dateInput, number: numberInput });
+
+            savedData.sort((a, b) => {
+
+                const dateA = new Date(`20${a.date.slice(6,8)}`, a.date.slice(3,5)-1, a.date.slice(0,2));
+
+                const dateB = new Date(`20${b.date.slice(6,8)}`, b.date.slice(3,5)-1, b.date.slice(0,2));
+
+                return dateB - dateA;
+
+            });
+
+            localStorage.setItem(localStorageKey, JSON.stringify(savedData));
+
+            loadData(document.getElementById('searchInput').value.trim());
+
+            document.getElementById('dateInput').value = '';
+
+            document.getElementById('numberInput').value = '';
+
+        }
+
+        function editRow(index) {
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+
+            const dataToEdit = savedData[index];
+
+            document.getElementById('dateInput').value = dataToEdit.date;
+
+            document.getElementById('numberInput').value = dataToEdit.number;
+
+            editRowIndex = index;
+
+            const submitButton = document.querySelector('#dataForm button[type="submit"]');
+
+            submitButton.textContent = 'Simpan Edit';
+
+        }
+
+        function saveEdit() {
+
+            const dateInput = document.getElementById('dateInput').value.trim();
+
+            const numberInput = document.getElementById('numberInput').value.trim();
+
+            const errorMessage = document.getElementById('errorMessage');
+
+            const datePattern = /^\d{2}\/\d{2}\/\d{2}$/;
+
+            if (!datePattern.test(dateInput) || !isValidDate(dateInput)) {
+
+                errorMessage.textContent = 'Masukkan tanggal yang valid dalam format DD/MM/YY';
+
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+
+                return;
+
+            }
+
+            const numberPattern = /^\d{4}$/;
+
+            if (!numberPattern.test(numberInput)) {
+
+                errorMessage.textContent = 'Masukkan nomor 4 digit angka';
+
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+
+                return;
+
+            }
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+
+            savedData[editRowIndex] = { date: dateInput, number: numberInput };
+
+            savedData.sort((a, b) => {
+
+                const dateA = new Date(`20${a.date.slice(6,8)}`, a.date.slice(3,5)-1, a.date.slice(0,2));
+
+                const dateB = new Date(`20${b.date.slice(6,8)}`, b.date.slice(3,5)-1, b.date.slice(0,2));
+
+                return dateB - dateA;
+
+            });
+
+            localStorage.setItem(localStorageKey, JSON.stringify(savedData));
+
+            loadData(document.getElementById('searchInput').value.trim());
+
+            document.getElementById('dateInput').value = '';
+
+            document.getElementById('numberInput').value = '';
+
+            const submitButton = document.querySelector('#dataForm button[type="submit"]');
+
+            submitButton.textContent = 'Tambah Data';
+
+            editRowIndex = null;
+
+        }
+
+        function deleteRow(index) {
+
+            if (!confirm('Yakin ingin menghapus data ini?')) return;
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+
+            savedData.splice(index, 1);
+
+            savedData.sort((a, b) => {
+
+                const dateA = new Date(`20${a.date.slice(6,8)}`, a.date.slice(3,5)-1, a.date.slice(0,2));
+
+                const dateB = new Date(`20${b.date.slice(6,8)}`, b.date.slice(3,5)-1, b.date.slice(0,2));
+
+                return dateB - dateA;
+
+            });
+
+            localStorage.setItem(localStorageKey, JSON.stringify(savedData));
+
+            loadData(document.getElementById('searchInput').value.trim());
+
+        }
+
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
+
+            e.preventDefault();
+
+            if (editRowIndex !== null) {
+
+                saveEdit();
+
+            } else {
+
+                addData();
+
+            }
+
+        });
+
+        function shareData() {
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || initialData;
+
+            let text = 'Data SGP Pools 2025\n\nTanggal - Nomor\n';
+
+            savedData.forEach(item => {
+
+                text += `${item.date} - ${item.number}\n`;
+
+            });
+
+            if (navigator.share) {
+
+                navigator.share({
+
+                    title: 'Data SGP Pools 2025',
+
+                    text: text
+
+                }).catch(err => console.log('Error sharing', err));
+
+            } else {
+
+                navigator.clipboard.writeText(text).then(() => {
+
+                    alert('Data telah disalin ke clipboard!');
+
+                }).catch(() => {
+
+                    alert('Data:\n\n' + text);
+
+                });
+
+            }
+
+        }
+
+        function downloadText() {
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || initialData;
+
+            let text = 'Data SGP Pools 2025\n\nTanggal\tNomor\n';
+
+            savedData.forEach(item => {
+
+                text += `${item.date}\t${item.number}\n`;
+
+            });
+
+            const blob = new Blob([text], { type: 'text/plain' });
+
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+
+            a.href = url;
+
+            a.download = 'data_sgp_2025.txt';
+
+            a.click();
+
+            URL.revokeObjectURL(url);
+
+        }
+
+        function downloadCSV() {
+
+            let savedData = JSON.parse(localStorage.getItem(localStorageKey)) || initialData;
+
+            let csv = 'Tanggal,Nomor\n';
+
+            savedData.forEach(item => {
+
+                csv += `${item.date},${item.number}\n`;
+
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+
+            a.href = url;
+
+            a.download = 'data_sgp_2025.csv';
+
+            a.click();
+
+            URL.revokeObjectURL(url);
+
+        }
+
+        const audio = document.getElementById('musicPlayer');
+
+        const status = document.getElementById('playerStatus');
+
+        function playMusic() { audio.play(); status.textContent = 'Playing ♪'; }
+
+        function pauseMusic() { audio.pause(); status.textContent = 'Paused'; }
+
+        function stopMusic() { audio.pause(); audio.currentTime = 0; status.textContent = 'Stopped'; }
+
+        audio.addEventListener('ended', () => { status.textContent = 'Stopped'; });
+
+        window.onload = function() {
+
+            initializeData();
+
+        };
+
+    </script>
+
+</body>
+
+</html>
