@@ -1,8 +1,10 @@
 {
   "name": "Tekhim's Mp3 Player • Multi Neon",
   "short_name": "Tekhim MP3",
-  "description": "Mp3 Player Neon dengan koleksi lagu terbaik",
-  "start_url": "/index.html",
+  "description": "Mp3 Player Neon",
+  "start_url": "/music-player/",
+  "scope": "/music-player/",
+  "id": "/music-player/",
   "display": "standalone",
   "background_color": "#010314",
   "theme_color": "#ff00ff",
