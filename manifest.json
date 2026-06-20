@@ -1,22 +1,22 @@
 {
   "name": "Tekhim's Mp3 Player • Multi Neon",
   "short_name": "Tekhim MP3",
-  "description": "Mp3 Player Neon",
-  "start_url": "/music-player/",
-  "scope": "/music-player/",
-  "id": "/music-player/",
+  "description": "Mp3 Player Neon Collection",
+  "start_url": "/github.io/music-player.htm",
+  "scope": "/github.io/",
+  "id": "/github.io/music-player.htm",
   "display": "standalone",
   "background_color": "#010314",
   "theme_color": "#ff00ff",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/github.io/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "/github.io/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
