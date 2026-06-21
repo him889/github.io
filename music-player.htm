@@ -776,6 +776,50 @@ window.addEventListener(
 
 </script>
 
+<script>
+
+function setupVoiceCommand() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (!SpeechRecognition) {
+        console.log("Browser ga support voice recognition");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true; // Terus mendengarkan
+    recognition.lang = 'id-ID'; // Bahasa Indonesia
+    recognition.interimResults = false;
+
+    recognition.onresult = function(event) {
+        const last = event.results.length - 1;
+        const command = event.results[last][0].transcript.toLowerCase();
+        console.log("Perintah: " + command);
+
+        if (command.includes("putar") || command.includes("play")) {
+            // Panggil fungsi play di app kamu
+            document.getElementById('audioPlayer').play(); 
+        } else if (command.includes("berhenti") || command.includes("stop")) {
+            document.getElementById('audioPlayer').pause();
+        } else if (command.includes("next") || command.includes("lanjut")) {
+            // Panggil fungsi next lagu
+            playNextSong();
+        }
+    };
+
+    recognition.onend = function() {
+        recognition.start(); // Looping biar selalu nyala
+    };
+
+    recognition.start();
+}
+
+// Jalankan saat app dibuka (bisa di trigger lewat tombol biar user approve microphone dulu)
+// <button onclick="setupVoiceCommand()">Aktifkan Voice Control</button>
+
+
+  </script>
+
 </body>
 </html>
 
