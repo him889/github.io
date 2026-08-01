@@ -364,10 +364,40 @@
 
         // === DATA BARU HK LOTTO 2026 ===
         const initialData = [
+            { date: "31/07/26", number: "2535" },
+            { date: "30/07/26", number: "9237" },
+            { date: "29/07/26", number: "3930" },
+            { date: "28/07/26", number: "7437" },
+            { date: "27/07/26", number: "4937" },
+            { date: "26/07/26", number: "0037" },
+            { date: "25/07/26", number: "6465" },
+            { date: "24/07/26", number: "1869" },
+            { date: "23/07/26", number: "1545" },
+            { date: "22/07/26", number: "6880" },
+            { date: "21/07/26", number: "8568" },
+            { date: "20/07/26", number: "4957" },
+            { date: "19/07/26", number: "7344" },
+            { date: "18/07/26", number: "1165" },
+            { date: "17/07/26", number: "0614" },
+            { date: "16/07/26", number: "9010" },
+            { date: "15/07/26", number: "3156" },
+            { date: "14/07/26", number: "3684" },
+            { date: "13/07/26", number: "0267" },
+            { date: "12/07/26", number: "4733" },
+            { date: "11/07/26", number: "9430" },
+            { date: "10/07/26", number: "2698" },
+            { date: "09/07/26", number: "3825" },
+            { date: "08/07/26", number: "6693" },
+            { date: "07/07/26", number: "0233" },
+            { date: "06/07/26", number: "0271" },
+            { date: "05/07/26", number: "0326" },
+            { date: "04/07/26", number: "6290" },
+            { date: "03/07/26", number: "8143" },
+            { date: "02/07/26", number: "3378" },
+            { date: "01/07/26", number: "2007" },
             { date: "30/06/26", number: "2696" },
             { date: "29/06/26", number: "1305" },
             { date: "28/06/26", number: "5169" },
-            { date: "27/06/26", number: "9328" },
             { date: "26/06/26", number: "7595" },
             { date: "25/06/26", number: "4707" },
             { date: "24/06/26", number: "5565" },
@@ -545,10 +575,8 @@
         ];
 
         function initializeData() {
-            const savedData = JSON.parse(localStorage.getItem(HK_LOTTO_STORAGE_KEY)) || [];
-            if (savedData.length === 0) {
-                localStorage.setItem(HK_LOTTO_STORAGE_KEY, JSON.stringify(initialData));
-            }
+            // Hapus data lama dan simpan data baru
+            localStorage.setItem(HK_LOTTO_STORAGE_KEY, JSON.stringify(initialData));
             loadData();
         }
 
@@ -788,6 +816,8 @@
         });
 
         window.onload = function() {
+            // Hapus data lama dan inisialisasi dengan data baru
+            localStorage.removeItem(HK_LOTTO_STORAGE_KEY);
             initializeData();
         };
     </script>
