@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data HK Pools 2026 </title>
+    <title>Data HK Pools 2026</title>
     <!-- PWA Manifest -->
     <link rel="manifest" href="data:application/manifest+json,{
         %22name%22:%22Data%20HK%20Pools%202026%22,
@@ -348,7 +348,7 @@
     </div>
 
     <audio id="musicPlayer" preload="none">
-        <source src="satu-rasa-cinta(Arief).mp3" type="audio/mpeg">
+        <source src="dj1.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung audio.
     </audio>
 
@@ -362,8 +362,38 @@
 
         // === DATA BARU HK POOLS 2026 ===
         const initialData = [
+            { date: "31/07/26", number: "1140" },
+            { date: "30/07/26", number: "0409" },
+            { date: "29/07/26", number: "5305" },
+            { date: "28/07/26", number: "6583" },
+            { date: "27/07/26", number: "5937" },
+            { date: "26/07/26", number: "6057" },
+            { date: "25/07/26", number: "0734" },
+            { date: "24/07/26", number: "8701" },
+            { date: "23/07/26", number: "5902" },
+            { date: "22/07/26", number: "1694" },
+            { date: "21/07/26", number: "2177" },
+            { date: "20/07/26", number: "4610" },
+            { date: "19/07/26", number: "0447" },
+            { date: "18/07/26", number: "0882" },
+            { date: "17/07/26", number: "8809" },
+            { date: "16/07/26", number: "9064" },
+            { date: "15/07/26", number: "0655" },
+            { date: "14/07/26", number: "9206" },
+            { date: "13/07/26", number: "9392" },
+            { date: "12/07/26", number: "6416" },
+            { date: "11/07/26", number: "5490" },
+            { date: "10/07/26", number: "0161" },
+            { date: "09/07/26", number: "4152" },
+            { date: "08/07/26", number: "5054" },
+            { date: "07/07/26", number: "8961" },
+            { date: "06/07/26", number: "8178" },
+            { date: "05/07/26", number: "4193" },
+            { date: "04/07/26", number: "3924" },
+            { date: "03/07/26", number: "3951" },
+            { date: "02/07/26", number: "2079" },
+            { date: "01/07/26", number: "6358" },
             { date: "30/06/26", number: "0188" },
-            { date: "29/06/26", number: "4679" },
             { date: "28/06/26", number: "8172" },
             { date: "27/06/26", number: "2066" },
             { date: "26/06/26", number: "7895" },
@@ -544,10 +574,8 @@
         ];
 
         function initializeData() {
-            const savedData = JSON.parse(localStorage.getItem('hkData')) || [];
-            if (savedData.length === 0) {
-                localStorage.setItem('hkData', JSON.stringify(initialData));
-            }
+            // Hapus semua data lama dengan menimpa dengan data baru
+            localStorage.setItem('hkData', JSON.stringify(initialData));
             loadData();
         }
 
@@ -787,6 +815,8 @@
         });
 
         window.onload = function() {
+            // Hapus data lama dan inisialisasi dengan data baru
+            localStorage.removeItem('hkData');
             initializeData();
         };
     </script>
