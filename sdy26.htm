@@ -572,12 +572,8 @@
             { date: "01/01/26", number: "1759" }
         ];
 
-        function getLocalStorageKey() {
-            const pageName = window.location.pathname.split('/').pop();
-            return `${pageName.replace('.htm', '')}Data`;
-        }
-
-        const localStorageKey = getLocalStorageKey();
+        // KEY FIXED (biar nggak hilang pas refresh)
+        const localStorageKey = 'sdyPools2026Data';
 
         function initializeData() {
             const savedData = JSON.parse(localStorage.getItem(localStorageKey)) || [];
@@ -770,7 +766,7 @@
             let text = 'Data SDY Pools 2026\n\nTanggal\tNomor\n';
 
             savedData.forEach(item => {
-                text += `${item.date}\t${item.number}\n`;
+                text += `\( {item.date}\t \){item.number}\n`;
             });
 
             const blob = new Blob([text], { type: 'text/plain' });
@@ -787,7 +783,7 @@
             let csv = 'Tanggal,Nomor\n';
 
             savedData.forEach(item => {
-                csv += `${item.date},${item.number}\n`;
+                csv += `\( {item.date}, \){item.number}\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
