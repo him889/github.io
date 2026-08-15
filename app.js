@@ -769,3 +769,620 @@ console.log(
 console.log(
     "By : Tekhim"
 );
+
+
+/* =========================================
+   LUNAR + SOLAR MONTHLY CALENDAR
+   By : Tekhim
+========================================= */
+
+let calendarYear;
+let calendarMonth;
+
+
+/* =========================================
+   START CALENDAR
+========================================= */
+
+function startCalendar() {
+
+    const now = new Date();
+
+    calendarYear =
+        now.getFullYear();
+
+    calendarMonth =
+        now.getMonth();
+
+    renderCalendar();
+
+}
+
+
+/* =========================================
+   MONTH NAME
+========================================= */
+
+function getIndonesianMonth(month) {
+
+    const months = [
+
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+
+    ];
+
+    return months[month];
+
+}
+
+
+/* =========================================
+   LUNAR DISPLAY NAME
+========================================= */
+
+function getLunarDisplay(lunar) {
+
+    const day =
+        lunar.getDay();
+
+    const month =
+        lunar.getMonth();
+
+
+    /*
+       Tanggal 1
+    */
+
+    if (day === 1) {
+
+        return "初一";
+
+    }
+
+
+    /*
+       Tanggal 15
+    */
+
+    if (day === 15) {
+
+        return "十五";
+
+    }
+
+
+    /*
+       Tanggal lainnya
+    */
+
+    return lunar.getDayInChinese();
+
+}
+
+
+/* =========================================
+   RENDER CALENDAR
+========================================= */
+
+function renderCalendar() {
+
+    const grid =
+        document.getElementById(
+            "calendarGrid"
+        );
+
+    const title =
+        document.getElementById(
+            "calendarMonth"
+        );
+
+    const lunarTitle =
+        document.getElementById(
+            "calendarLunarMonth"
+        );
+
+
+    if (!grid) {
+
+        return;
+
+    }
+
+
+    grid.innerHTML = "";
+
+
+    /*
+       Nama bulan Masehi
+    */
+
+    title.textContent =
+        `${getIndonesianMonth(calendarMonth)}
+         ${calendarYear}`;
+
+
+    /*
+       Hari pertama bulan
+    */
+
+    const firstDay =
+        new Date(
+            calendarYear,
+            calendarMonth,
+            1
+        );
+
+
+    /*
+       Hari terakhir bulan
+    */
+
+    const lastDay =
+        new Date(
+            calendarYear,
+            calendarMonth + 1,
+            0
+        );
+
+
+    /*
+       Minggu = 0
+       Senin = 1
+       ...
+       Sabtu = 6
+    */
+
+    const startDay =
+        firstDay.getDay();
+
+
+    const daysInMonth =
+        lastDay.getDate();
+
+
+    /*
+       Ambil Lunar bulan ini
+    */
+
+    let lunarMonthText =
+        "Kalender Lunar";
+
+
+    try {
+
+        const solar =
+            Solar.fromYmd(
+                calendarYear,
+                calendarMonth + 1,
+                1
+            );
+
+
+        const lunar =
+            solar.getLunar();
+
+
+        lunarMonthText =
+            `Lunar ${lunar.getYear()}
+             • ${lunar.getMonthInChinese()}月`;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+    }
+
+
+    lunarTitle.textContent =
+        lunarMonthText;
+
+
+    /*
+       Sel kosong sebelum tanggal 1
+    */
+
+    for (
+        let i = 0;
+        i < startDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+
+        empty.className =
+            "calendar-day empty";
+
+
+        grid.appendChild(
+            empty
+        );
+
+    }
+
+
+    /*
+       Buat semua tanggal
+    */
+
+    for (
+        let day = 1;
+        day <= daysInMonth;
+        day++
+    ) {
+
+        const cell =
+            document.createElement(
+                "div"
+            );
+
+
+        cell.className =
+            "calendar-day";
+
+
+        /*
+           Tanggal Masehi
+        */
+
+        const solarNumber =
+            document.createElement(
+                "span"
+            );
+
+
+        solarNumber.className =
+            "solar-number";
+
+
+        solarNumber.textContent =
+            day;
+
+
+        /*
+           Tanggal Lunar
+        */
+
+        const lunarNumber =
+            document.createElement(
+                "span"
+            );
+
+
+        lunarNumber.className =
+            "lunar-number";
+
+
+        /*
+           Konversi Masehi → Lunar
+        */
+
+        try {
+
+            const solar =
+                Solar.fromYmd(
+                    calendarYear,
+                    calendarMonth + 1,
+                    day
+                );
+
+
+            const lunar =
+                solar.getLunar();
+
+
+            lunarNumber.textContent =
+                getLunarDisplay(
+                    lunar
+                );
+
+
+            /*
+               Tanggal 1 Imlek
+            */
+
+            if (
+                lunar.getDay() === 1
+            ) {
+
+                cell.classList.add(
+                    "lunar-first"
+                );
+
+            }
+
+
+            /*
+               Tanggal 15 Imlek
+            */
+
+            if (
+                lunar.getDay() === 15
+            ) {
+
+                cell.classList.add(
+                    "lunar-fifteenth"
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            lunarNumber.textContent =
+                "--";
+
+            console.error(
+                error
+            );
+
+        }
+
+
+        /*
+           Tandai hari ini
+        */
+
+        const now =
+            new Date();
+
+
+        if (
+
+            day === now.getDate() &&
+
+            calendarMonth ===
+                now.getMonth() &&
+
+            calendarYear ===
+                now.getFullYear()
+
+        ) {
+
+            cell.classList.add(
+                "today"
+            );
+
+        }
+
+
+        /*
+           Masukkan ke cell
+        */
+
+        cell.appendChild(
+            solarNumber
+        );
+
+
+        cell.appendChild(
+            lunarNumber
+        );
+
+
+        /*
+           Klik tanggal
+        */
+
+        cell.addEventListener(
+            "click",
+            () => {
+
+                showCalendarDay(
+                    calendarYear,
+                    calendarMonth,
+                    day
+                );
+
+            }
+        );
+
+
+        grid.appendChild(
+            cell
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   DAY INFORMATION
+========================================= */
+
+function showCalendarDay(
+    year,
+    month,
+    day
+) {
+
+    try {
+
+        const solar =
+            Solar.fromYmd(
+                year,
+                month + 1,
+                day
+            );
+
+
+        const lunar =
+            solar.getLunar();
+
+
+        let message =
+            `${day} ${getIndonesianMonth(month)} ${year}\n\n`;
+
+
+        message +=
+            `Lunar: `;
+
+
+        message +=
+            `${lunar.getYear()}年 `;
+
+
+        message +=
+            `${lunar.getMonthInChinese()}月`;
+
+
+        message +=
+            `${lunar.getDayInChinese()}`;
+
+
+        /*
+           Tanggal 1
+        */
+
+        if (
+            lunar.getDay() === 1
+        ) {
+
+            message +=
+                "\n\n🧧 TANGGAL 1 IMLEK";
+
+        }
+
+
+        /*
+           Tanggal 15
+        */
+
+        if (
+            lunar.getDay() === 15
+        ) {
+
+            message +=
+                "\n\n🌕 TANGGAL 15 IMLEK";
+
+        }
+
+
+        alert(
+            message
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   PREVIOUS MONTH
+========================================= */
+
+document
+    .getElementById("prevMonth")
+    .addEventListener(
+        "click",
+        () => {
+
+            calendarMonth--;
+
+            if (
+                calendarMonth < 0
+            ) {
+
+                calendarMonth = 11;
+
+                calendarYear--;
+
+            }
+
+
+            renderCalendar();
+
+        }
+    );
+
+
+/* =========================================
+   NEXT MONTH
+========================================= */
+
+document
+    .getElementById("nextMonth")
+    .addEventListener(
+        "click",
+        () => {
+
+            calendarMonth++;
+
+            if (
+                calendarMonth > 11
+            ) {
+
+                calendarMonth = 0;
+
+                calendarYear++;
+
+            }
+
+
+            renderCalendar();
+
+        }
+    );
+
+
+/* =========================================
+   TODAY
+========================================= */
+
+document
+    .getElementById("todayButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            const now =
+                new Date();
+
+
+            calendarYear =
+                now.getFullYear();
+
+
+            calendarMonth =
+                now.getMonth();
+
+
+            renderCalendar();
+
+        }
+    );
+
+
+/* =========================================
+   RUN CALENDAR
+========================================= */
+
+startCalendar();
