@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080609">
+    <title>IMLEK+ | Lunar Calendar & Reminder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+/* ==================== CSS ==================== */
+:root {
+    --bg: #070609;
+    --bg2: #0e0b10;
+    --card: rgba(255,255,255,0.055);
+    --card-border: rgba(255,255,255,0.09);
+    --red: #ff2348;
+    --red-light: #ff526d;
+    --gold: #e8b84b;
+    --gold-light: #ffe19a;
+    --white: #f8f5f5;
+    --muted: #8d888e;
+    --radius: 24px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    color: var(--white);
+    background:
+        radial-gradient(circle at 10% 0%, rgba(255,35,72,0.13), transparent 35%),
+        radial-gradient(circle at 90% 20%, rgba(232,184,75,0.09), transparent 35%),
+        var(--bg);
+    overflow-x: hidden;
+}
+
+button, input { font-family: inherit; }
+button { border: none; cursor: pointer; }
+
+.app {
+    width: min(100%, 520px);
+    margin: auto;
+    padding: 22px 18px 35px;
+    position: relative;
+    z-index: 2;
+}
+
+.background-glow {
+    position: fixed;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    opacity: 0.18;
+    z-index: 0;
+}
+.glow-red { background: var(--red); left: -150px; top: 30%; }
+.glow-gold { background: var(--gold); right: -150px; bottom: 10%; }
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-icon {
+    width: 48px; height: 48px;
+    display: grid; place-items: center;
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(255,35,72,0.25), rgba(232,184,75,0.08));
+    border: 1px solid rgba(255,35,72,0.25);
+    box-shadow: 0 0 30px rgba(255,35,72,0.12);
+    font-size: 22px;
+}
+.brand h1 { font-size: 21px; letter-spacing: 2px; font-weight: 800; }
+.brand h1 span { color: var(--red); }
+.brand p { font-size: 9px; letter-spacing: 1.5px; color: var(--muted); margin-top: 3px; }
+.icon-button {
+    width: 42px; height: 42px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    color: var(--white);
+    font-size: 20px;
+}
+
+/* TODAY CARD */
+.today-card {
+    position: relative;
+    padding: 25px;
+    border-radius: var(--radius);
+    background: linear-gradient(145deg, rgba(255,35,72,0.12), rgba(255,255,255,0.035));
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+.today-card::after {
+    content: "";
+    position: absolute;
+    width: 130px; height: 130px;
+    right: -50px; top: -50px;
+    border-radius: 50%;
+    background: var(--red);
+    filter: blur(70px);
+    opacity: 0.15;
+}
+.today-top {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 12px var(--red);
+}
+.today-date {
+    margin-top: 12px;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+.lunar-date {
+    margin-top: 7px;
+    color: var(--gold-light);
+    font-size: 13px;
+    font-weight: 600;
+}
+.today-line {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
+    margin: 20px 0;
+}
+.today-info {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+.today-info small {
+    display: block;
+    font-size: 8px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+.today-info strong { font-size: 12px; }
+
+/* SECTION */
+.section-title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 28px 3px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* COUNTDOWN */
+.countdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.countdown-card {
+    padding: 20px;
+    border-radius: 20px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(15px);
+    transition: transform 0.2s;
+}
+.countdown-card:active { transform: scale(0.97); }
+.countdown-card.primary {
+    border-color: rgba(255,35,72,0.25);
+    box-shadow: 0 0 30px rgba(255,35,72,0.07);
+}
+.card-label { font-size: 8px; letter-spacing: 1.5px; color: var(--muted); }
+.card-symbol { font-size: 25px; margin: 14px 0 10px; }
+.countdown-number { font-size: 22px; font-weight: 800; }
+.countdown-date { color: var(--muted); font-size: 9px; margin-top: 5px; }
+.progress {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    margin-top: 17px;
+    overflow: hidden;
+}
+.progress div {
+    height: 100%;
+    width: 0%;
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red);
+    transition: width 0.5s;
+}
+.progress.gold div {
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+}
+
+/* ACTIONS */
+.actions { display: grid; gap: 10px; }
+.action-button {
+    display: grid;
+    grid-template-columns: 45px 1fr auto;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    text-align: left;
+    padding: 13px 15px;
+    border-radius: 17px;
+    color: var(--white);
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    transition: 0.2s;
+}
+.action-button:active {
+    transform: scale(0.98);
+    background: rgba(255,35,72,0.08);
+}
+.action-button span { grid-row: 1 / 3; font-size: 23px; }
+.action-button strong { font-size: 12px; }
+.action-button small { color: var(--muted); font-size: 8px; }
+
+/* REMINDER */
+.reminder-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 22px;
+    padding: 17px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(232,184,75,0.08), rgba(255,255,255,0.025));
+    border: 1px solid rgba(232,184,75,0.16);
+}
+.reminder-icon {
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    border-radius: 14px;
+    background: rgba(232,184,75,0.08);
+    font-size: 20px;
+}
+.reminder-content span {
+    display: block;
+    font-size: 8px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+.reminder-content strong { display: block; font-size: 11px; }
+.reminder-content small {
+    display: block;
+    color: var(--muted);
+    font-size: 8px;
+    margin-top: 4px;
+}
+
+/* FOOTER */
+footer { text-align: center; margin-top: 35px; color: var(--muted); }
+.footer-line {
+    width: 80px; height: 1px;
+    margin: auto auto 15px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+footer p { font-size: 8px; letter-spacing: 1px; }
+footer strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+}
+footer small { display: block; margin-top: 5px; font-size: 7px; }
+
+/* MODAL */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(12px);
+}
+.modal.hidden { display: none; }
+.modal-box {
+    width: min(100%, 380px);
+    position: relative;
+    padding: 28px;
+    border-radius: 25px;
+    background: #151116;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 30px 100px rgba(0,0,0,0.6);
+}
+.close-button {
+    position: absolute;
+    right: 15px; top: 12px;
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    background: var(--card);
+    color: white;
+    font-size: 22px;
+}
+.modal-icon { font-size: 30px; margin-bottom: 12px; }
+.modal-box h2 { font-size: 20px; margin-bottom: 8px; }
+.modal-box p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+.modal-box label {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+.modal-box input {
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 16px;
+}
+.save-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, var(--red), #b80f2c);
+    color: white;
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 30px rgba(255,35,72,0.2);
+}
+
+/* CALENDAR */
+.calendar-card {
+    padding: 18px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,35,72,0.035));
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    backdrop-filter: blur(18px);
+}
+.calendar-header {
+    display: grid;
+    grid-template-columns: 42px 1fr 42px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+.calendar-nav {
+    width: 40px; height: 40px;
+    border-radius: 13px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: white;
+    font-size: 28px;
+    line-height: 1;
+    transition: 0.2s;
+}
+.calendar-nav:active {
+    transform: scale(0.9);
+    background: rgba(255,35,72,0.15);
+}
+.calendar-title strong { display: block; font-size: 15px; font-weight: 800; }
+.calendar-title small {
+    display: block;
+    margin-top: 4px;
+    font-size: 9px;
+    color: var(--gold-light);
+    letter-spacing: 0.7px;
+}
+.today-button {
+    display: block;
+    margin: 15px auto;
+    padding: 7px 13px;
+    border-radius: 30px;
+    background: rgba(255,35,72,0.08);
+    border: 1px solid rgba(255,35,72,0.18);
+    color: var(--red-light);
+    font-size: 9px;
+    font-weight: 700;
+}
+.weekday-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 7px;
+    text-align: center;
+}
+.weekday-row span {
+    font-size: 8px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    padding: 6px 0;
+}
+.weekday-row span:first-child { color: var(--red-light); }
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+.calendar-day {
+    position: relative;
+    min-height: 57px;
+    padding: 7px 4px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid transparent;
+    text-align: center;
+    transition: 0.2s;
+    overflow: hidden;
+}
+.calendar-day:active { transform: scale(0.92); }
+.calendar-day.empty { background: transparent; border-color: transparent; }
+.solar-number {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.lunar-number {
+    display: block;
+    margin-top: 5px;
+    font-size: 8px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.calendar-day.today {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.07);
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.025);
+}
+.calendar-day.today .solar-number {
+    color: white;
+    text-shadow: 0 0 10px white;
+}
+.calendar-day.lunar-first {
+    background: linear-gradient(145deg, rgba(255,35,72,0.19), rgba(255,35,72,0.05));
+    border-color: rgba(255,35,72,0.42);
+    box-shadow: 0 0 18px rgba(255,35,72,0.08);
+}
+.calendar-day.lunar-first .lunar-number {
+    color: var(--red-light);
+    font-weight: 800;
+}
+.calendar-day.lunar-fifteenth {
+    background: linear-gradient(145deg, rgba(232,184,75,0.18), rgba(232,184,75,0.04));
+    border-color: rgba(232,184,75,0.38);
+    box-shadow: 0 0 18px rgba(232,184,75,0.07);
+}
+.calendar-day.lunar-fifteenth .lunar-number {
+    color: var(--gold-light);
+    font-weight: 800;
+}
+.calendar-day.lunar-first::after,
+.calendar-day.lunar-fifteenth::after {
+    content: "●";
+    position: absolute;
+    top: 3px; right: 5px;
+    font-size: 6px;
+}
+.calendar-day.lunar-first::after { color: var(--red); text-shadow: 0 0 8px var(--red); }
+.calendar-day.lunar-fifteenth::after { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 17px;
+    padding-top: 13px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: var(--muted);
+    font-size: 7px;
+}
+.calendar-legend div { display: flex; align-items: center; gap: 5px; }
+.calendar-legend i {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.legend-red { background: var(--red); box-shadow: 0 0 7px var(--red); }
+.legend-gold { background: var(--gold); box-shadow: 0 0 7px var(--gold); }
+.legend-today { background: white; box-shadow: 0 0 7px white; }
+
+@media (max-width: 370px) {
+    .app { padding-left: 13px; padding-right: 13px; }
+    .today-date { font-size: 24px; }
+    .countdown-card { padding: 15px; }
+    .countdown-number { font-size: 18px; }
+    .calendar-day { min-height: 52px; padding: 6px 2px; }
+    .solar-number { font-size: 13px; }
+    .lunar-number { font-size: 7px; }
+}
+    </style>
+</head>
+<body>
+    <div class="background-glow glow-red"></div>
+    <div class="background-glow glow-gold"></div>
+
+    <main class="app">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="brand">
+                <div class="brand-icon">🧧</div>
+                <div>
+                    <h1>IMLEK<span>+</span></h1>
+                    <p>Lunar Calendar & Reminder</p>
+                </div>
+            </div>
+            <button id="themeButton" class="icon-button">◐</button>
+        </header>
+
+        <!-- TODAY CARD -->
+        <section class="today-card">
+            <div class="today-top">
+                <span class="status-dot"></span>
+                HARI INI
+            </div>
+            <div id="todayDate" class="today-date">--</div>
+            <div id="todayLunar" class="lunar-date">Memuat kalender Imlek...</div>
+            <div class="today-line"></div>
+            <div class="today-info">
+                <div>
+                    <small>TAHUN</small>
+                    <strong id="lunarYear">--</strong>
+                </div>
+                <div>
+                    <small>SHIO</small>
+                    <strong id="zodiac">--</strong>
+                </div>
+                <div>
+                    <small>FASE</small>
+                    <strong id="moonPhase">--</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUNTDOWN -->
+        <section class="section-title">
+            <span>⏳</span> Countdown
+        </section>
+        <section class="countdown-grid">
+            <div class="countdown-card primary">
+                <div class="card-label">TANGGAL 1</div>
+                <div class="card-symbol">🧧</div>
+                <div id="nextFirstText" class="countdown-number">--</div>
+                <div id="nextFirstDate" class="countdown-date">--</div>
+                <div class="progress"><div id="firstProgress"></div></div>
+            </div>
+            <div class="countdown-card">
+                <div class="card-label">TANGGAL 15</div>
+                <div class="card-symbol">🌕</div>
+                <div id="nextFifteenthText" class="countdown-number">--</div>
+                <div id="nextFifteenthDate" class="countdown-date">--</div>
+                <div class="progress gold"><div id="fifteenthProgress"></div></div>
+            </div>
+        </section>
+
+        <!-- LUNAR CALENDAR -->
+        <section class="section-title">
+            <span>📅</span> Kalender Lunar
+        </section>
+        <section class="calendar-card">
+            <div class="calendar-header">
+                <button id="prevMonth" class="calendar-nav">‹</button>
+                <div class="calendar-title">
+                    <strong id="calendarMonth">Agustus 2026</strong>
+                    <small id="calendarLunarMonth">Kalender Lunar</small>
+                </div>
+                <button id="nextMonth" class="calendar-nav">›</button>
+            </div>
+            <button id="todayButton" class="today-button">⌁ Kembali ke Hari Ini</button>
+            <div class="weekday-row">
+                <span>MIN</span><span>SEN</span><span>SEL</span><span>RAB</span>
+                <span>KAM</span><span>JUM</span><span>SAB</span>
+            </div>
+            <div id="calendarGrid" class="calendar-grid"></div>
+            <div class="calendar-legend">
+                <div><i class="legend-red"></i> Tanggal 1 Imlek</div>
+                <div><i class="legend-gold"></i> Tanggal 15 Imlek</div>
+                <div><i class="legend-today"></i> Hari ini</div>
+            </div>
+        </section>
+
+        <!-- QUICK ACTION -->
+        <section class="section-title">
+            <span>⚡</span> Quick Action
+        </section>
+        <section class="actions">
+            <button class="action-button" id="calendarButton">
+                <span>📅</span>
+                <strong>Kalender</strong>
+                <small>Lunar + Masehi</small>
+            </button>
+            <button class="action-button" id="alarmButton">
+                <span>🔔</span>
+                <strong>Pengingat</strong>
+                <small>Alarm tanggal 1 & 15</small>
+            </button>
+            <button class="action-button" id="icsButton">
+                <span>📄</span>
+                <strong>Export .ICS</strong>
+                <small>Google Calendar</small>
+            </button>
+        </section>
+
+        <!-- REMINDER -->
+        <section class="reminder-card">
+            <div class="reminder-icon">🙏</div>
+            <div class="reminder-content">
+                <span>PENGINGAT</span>
+                <strong id="reminderText">Jangan sampai lupa sembahyang.</strong>
+                <small>Karena dewa tidak menyediakan fitur "lupa password".</small>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-line"></div>
+            <p>Lunar Calendar • Reminder • PWA</p>
+            <strong>By : Tekhim</strong>
+            <small>v1.1 Fixed</small>
+        </footer>
+    </main>
+
+    <!-- MODAL ALARM -->
+    <div id="alarmModal" class="modal hidden">
+        <div class="modal-box">
+            <button id="closeModal" class="close-button">×</button>
+            <div class="modal-icon">🔔</div>
+            <h2>Pengaturan Pengingat</h2>
+            <p>Atur waktu pengingat untuk tanggal 1 dan 15 Imlek.</p>
+            <label>Jam pengingat</label>
+            <input type="time" id="alarmTime" value="05:00">
+            <button id="saveAlarm" class="save-button">SIMPAN PENGATURAN</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
+    <script>
+/* ==================== JS FIXED ==================== */
+
+const todayDate = document.getElementById("todayDate");
+const todayLunar = document.getElementById("todayLunar");
+const lunarYear = document.getElementById("lunarYear");
+const zodiac = document.getElementById("zodiac");
+const moonPhase = document.getElementById("moonPhase");
+const nextFirstText = document.getElementById("nextFirstText");
+const nextFirstDate = document.getElementById("nextFirstDate");
+const nextFifteenthText = document.getElementById("nextFifteenthText");
+const nextFifteenthDate = document.getElementById("nextFifteenthDate");
+const reminderText = document.getElementById("reminderText");
+const firstProgress = document.getElementById("firstProgress");
+const fifteenthProgress = document.getElementById("fifteenthProgress");
+
+function formatDate(date) {
+    return date.toLocaleDateString("id-ID", {
+        weekday: "long", day: "numeric", month: "long", year: "numeric"
+    });
+}
+
+function lunarMonthName(month) {
+    const months = ["", "Bulan 1","Bulan 2","Bulan 3","Bulan 4","Bulan 5","Bulan 6",
+        "Bulan 7","Bulan 8","Bulan 9","Bulan 10","Bulan 11","Bulan 12"];
+    return months[Math.abs(month)] || "";
+}
+
+function lunarDayName(day) {
+    const days = ["","Tanggal 1","Tanggal 2","Tanggal 3","Tanggal 4","Tanggal 5",
+        "Tanggal 6","Tanggal 7","Tanggal 8","Tanggal 9","Tanggal 10","Tanggal 11",
+        "Tanggal 12","Tanggal 13","Tanggal 14","Tanggal 15","Tanggal 16","Tanggal 17",
+        "Tanggal 18","Tanggal 19","Tanggal 20","Tanggal 21","Tanggal 22","Tanggal 23",
+        "Tanggal 24","Tanggal 25","Tanggal 26","Tanggal 27","Tanggal 28","Tanggal 29","Tanggal 30"];
+    return days[day] || "";
+}
+
+function getZodiac(year) {
+    const animals = ["Monyet 🐒","Ayam 🐓","Anjing 🐕","Babi 🐖","Tikus 🐀","Kerbau 🐂",
+        "Macan 🐅","Kelinci 🐇","Naga 🐉","Ular 🐍","Kuda 🐎","Kambing 🐐"];
+    return animals[year % 12];
+}
+
+function getTodayLunar() {
+    const now = new Date();
+    const solar = Solar.fromYmd(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    return solar.getLunar();
+}
+
+function updateToday() {
+    const now = new Date();
+    todayDate.textContent = formatDate(now);
+
+    try {
+        const lunar = getTodayLunar();
+        const ly = lunar.getYear();
+        const lm = lunar.getMonth();
+        const ld = lunar.getDay();
+
+        todayLunar.textContent = `${lunarMonthName(lm)} • ${lunarDayName(ld)}`;
+        lunarYear.textContent = ly;
+        zodiac.textContent = getZodiac(ly);
+        moonPhase.textContent = ld === 1 ? "🌑 Baru" : ld === 15 ? "🌕 Purnama" : "🌙 Lunar";
+        updateReminder(ld);
+    } catch (error) {
+        console.error("Lunar error:", error);
+        todayLunar.textContent = "Lunar belum tersedia";
+    }
+}
+
+function updateReminder(day) {
+    if (day === 1) {
+        reminderText.textContent = "🙏 Hari ini tanggal 1 Imlek. Jangan lupa sembahyang.";
+    } else if (day === 15) {
+        reminderText.textContent = "🌕 Hari ini tanggal 15 Imlek. Jangan lupa sembahyang.";
+    } else {
+        reminderText.textContent = "Jangan sampai lupa sembahyang.";
+    }
+}
+
+function findNextLunarDay(targetDay) {
+    const now = new Date();
+    for (let i = 0; i <= 40; i++) {
+        const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+        const solar = Solar.fromYmd(date.getFullYear(), date.getMonth() + 1, date.getDate());
+        const lunar = solar.getLunar();
+        if (lunar.getDay() === targetDay) {
+            return { date, lunar };
+        }
+    }
+    return null;
+}
+
+function getCountdown(targetDate) {
+    const now = new Date();
+    const difference = targetDate - now;
+    if (difference <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((difference / (1000 * 60)) % 60);
+    const seconds = Math.floor((difference / 1000) % 60);
+    return { days, hours, minutes, seconds };
+}
+
+function updateCountdown() {
+    const first = findNextLunarDay(1);
+    const fifteenth = findNextLunarDay(15);
+
+    if (first) {
+        const countdown = getCountdown(first.date);
+        nextFirstText.textContent = `${countdown.days} hari`;
+        nextFirstDate.textContent = formatDate(first.date);
+        // Progress kasar (0-30 hari)
+        const pct = Math.max(0, Math.min(100, 100 - (countdown.days / 30 * 100)));
+        firstProgress.style.width = pct + "%";
+    }
+
+    if (fifteenth) {
+        const countdown = getCountdown(fifteenth.date);
+        nextFifteenthText.textContent = `${countdown.days} hari`;
+        nextFifteenthDate.textContent = formatDate(fifteenth.date);
+        const pct = Math.max(0, Math.min(100, 100 - (countdown.days / 30 * 100)));
+        fifteenthProgress.style.width = pct + "%";
+    }
+}
+
+/* ALARM */
+const alarmModal = document.getElementById("alarmModal");
+const alarmButton = document.getElementById("alarmButton");
+const closeModal = document.getElementById("closeModal");
+const saveAlarm = document.getElementById("saveAlarm");
+const alarmTime = document.getElementById("alarmTime");
+
+alarmButton.addEventListener("click", () => {
+    alarmModal.classList.remove("hidden");
+    const saved = localStorage.getItem("imlekAlarm");
+    if (saved) alarmTime.value = saved;
+});
+
+closeModal.addEventListener("click", () => alarmModal.classList.add("hidden"));
+
+saveAlarm.addEventListener("click", () => {
+    localStorage.setItem("imlekAlarm", alarmTime.value);
+    alarmModal.classList.add("hidden");
+    alert(`Pengingat disimpan: ${alarmTime.value}`);
+});
+
+/* ICS */
+document.getElementById("icsButton").addEventListener("click", generateICS);
+
+function generateICS() {
+    const first = findNextLunarDay(1);
+    const fifteenth = findNextLunarDay(15);
+    if (!first || !fifteenth) {
+        alert("Tanggal Lunar belum ditemukan.");
+        return;
+    }
+
+    const events = [
+        { title: "🙏 Sembahyang - Tanggal 1 Imlek", date: first.date },
+        { title: "🌕 Sembahyang - Tanggal 15 Imlek", date: fifteenth.date }
+    ];
+
+    let ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Tekhim//Imlek Reminder//ID\r\nCALSCALE:GREGORIAN\r\n";
+    events.forEach(event => {
+        const y = event.date.getFullYear();
+        const m = String(event.date.getMonth() + 1).padStart(2, "0");
+        const d = String(event.date.getDate()).padStart(2, "0");
+        ics += "BEGIN:VEVENT\r\n";
+        ics += `DTSTART;VALUE=DATE:\( {y} \){m}${d}\r\n`;
+        ics += `SUMMARY:${event.title}\r\n`;
+        ics += "END:VEVENT\r\n";
+    });
+    ics += "END:VCALENDAR\r\n";
+
+    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Imlek-Reminder.ics";
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
+/* THEME (placeholder) */
+document.getElementById("themeButton").addEventListener("click", () => {
+    document.body.classList.toggle("light-preview");
+    alert("Mode terang belum diimplementasi total, tapi tombolnya hidup.");
+});
+
+/* CALENDAR BUTTON */
+document.getElementById("calendarButton").addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* ==================== CALENDAR ==================== */
+let calendarYear, calendarMonth;
+
+function startCalendar() {
+    const now = new Date();
+    calendarYear = now.getFullYear();
+    calendarMonth = now.getMonth();
+    renderCalendar();
+}
+
+function getIndonesianMonth(month) {
+    return ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"][month];
+}
+
+function getLunarDisplay(lunar) {
+    const day = lunar.getDay();
+    if (day === 1) return "初一";
+    if (day === 15) return "十五";
+    return lunar.getDayInChinese();
+}
+
+function renderCalendar() {
+    const grid = document.getElementById("calendarGrid");
+    const title = document.getElementById("calendarMonth");
+    const lunarTitle = document.getElementById("calendarLunarMonth");
+    if (!grid) return;
+
+    grid.innerHTML = "";
+    title.textContent = `${getIndonesianMonth(calendarMonth)} ${calendarYear}`;
+
+    const firstDay = new Date(calendarYear, calendarMonth, 1);
+    const lastDay = new Date(calendarYear, calendarMonth + 1, 0);
+    const startDay = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
+
+    let lunarMonthText = "Kalender Lunar";
+    try {
+        const solar = Solar.fromYmd(calendarYear, calendarMonth + 1, 1);
+        const lunar = solar.getLunar();
+        lunarMonthText = `Lunar ${lunar.getYear()} • ${lunar.getMonthInChinese()}月`;
+    } catch (e) { console.error(e); }
+    lunarTitle.textContent = lunarMonthText;
+
+    for (let i = 0; i < startDay; i++) {
+        const empty = document.createElement("div");
+        empty.className = "calendar-day empty";
+        grid.appendChild(empty);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-day";
+
+        const solarNumber = document.createElement("span");
+        solarNumber.className = "solar-number";
+        solarNumber.textContent = day;
+
+        const lunarNumber = document.createElement("span");
+        lunarNumber.className = "lunar-number";
+
+        try {
+            const solar = Solar.fromYmd(calendarYear, calendarMonth + 1, day);
+            const lunar = solar.getLunar();
+            lunarNumber.textContent = getLunarDisplay(lunar);
+
+            if (lunar.getDay() === 1) cell.classList.add("lunar-first");
+            if (lunar.getDay() === 15) cell.classList.add("lunar-fifteenth");
+        } catch (e) {
+            lunarNumber.textContent = "--";
+        }
+
+        const now = new Date();
+        if (day === now.getDate() && calendarMonth === now.getMonth() && calendarYear === now.getFullYear()) {
+            cell.classList.add("today");
+        }
+
+        cell.appendChild(solarNumber);
+        cell.appendChild(lunarNumber);
+
+        cell.addEventListener("click", () => {
+            try {
+                const solar = Solar.fromYmd(calendarYear, calendarMonth + 1, day);
+                const lunar = solar.getLunar();
+                alert(`${formatDate(new Date(calendarYear, calendarMonth, day))}\n\nLunar: ${lunar.getYear()}年 \( {lunar.getMonthInChinese()}月 \){lunar.getDayInChinese()}\nShio: ${getZodiac(lunar.getYear())}`);
+            } catch (e) {
+                alert("Gagal ambil data lunar");
+            }
+        });
+
+        grid.appendChild(cell);
+    }
+}
+
+document.getElementById("prevMonth").addEventListener("click", () => {
+    calendarMonth--;
+    if (calendarMonth < 0) { calendarMonth = 11; calendarYear--; }
+    renderCalendar();
+});
+
+document.getElementById("nextMonth").addEventListener("click", () => {
+    calendarMonth++;
+    if (calendarMonth > 11) { calendarMonth = 0; calendarYear++; }
+    renderCalendar();
+});
+
+document.getElementById("todayButton").addEventListener("click", () => {
+    const now = new Date();
+    calendarYear = now.getFullYear();
+    calendarMonth = now.getMonth();
+    renderCalendar();
+});
+
+/* START */
+updateToday();
+updateCountdown();
+startCalendar();
+
+setInterval(() => {
+    updateToday();
+    updateCountdown();
+}, 1000 * 60); // update setiap 1 menit aja biar ga berat
+
+console.log("🧧 IMLEK+ v1.1 Fixed by Grok");
+console.log("By : Tekhim");
+    </script>
+</body>
+  </html>
