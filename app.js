@@ -1502,6 +1502,91 @@ document
     );
 
 
+
+
+const lunarDetail =
+    document.getElementById(
+        "lunarDetail"
+    );
+
+
+const closeDetail =
+    document.getElementById(
+        "closeDetail"
+    );
+
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+closeDetail.addEventListener(
+    "click",
+    closeLunarDetail
+);
+
+
+/* =========================
+   CLOSE FUNCTION
+========================= */
+
+function closeLunarDetail() {
+
+    lunarDetail.classList.remove(
+        "show"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================
+   TAP OUTSIDE
+========================= */
+
+lunarDetail.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target === lunarDetail
+        ) {
+
+            closeLunarDetail();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeLunarDetail();
+
+        }
+
+    }
+);
+
+
+
+
+
+
 /* =========================================
    NEXT MONTH
 ========================================= */
