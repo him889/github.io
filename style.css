@@ -1,0 +1,905 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+
+:root {
+
+    --bg: #070609;
+    --bg2: #0e0b10;
+
+    --card: rgba(255,255,255,0.055);
+    --card-border: rgba(255,255,255,0.09);
+
+    --red: #ff2348;
+    --red-light: #ff526d;
+
+    --gold: #e8b84b;
+    --gold-light: #ffe19a;
+
+    --white: #f8f5f5;
+    --muted: #8d888e;
+
+    --radius: 24px;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family: "Inter", sans-serif;
+
+    color: var(--white);
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(255,35,72,0.13),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(232,184,75,0.09),
+            transparent 35%
+        ),
+        var(--bg);
+
+    overflow-x: hidden;
+}
+
+
+button,
+input {
+    font-family: inherit;
+}
+
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+
+.app {
+
+    width: min(100%, 520px);
+
+    margin: auto;
+
+    padding:
+        22px
+        18px
+        35px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* BACKGROUND */
+
+.background-glow {
+
+    position: fixed;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    opacity: 0.18;
+
+    z-index: 0;
+}
+
+
+.glow-red {
+
+    background: var(--red);
+
+    left: -150px;
+    top: 30%;
+}
+
+
+.glow-gold {
+
+    background: var(--gold);
+
+    right: -150px;
+    bottom: 10%;
+}
+
+
+/* HEADER */
+
+.header {
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.brand-icon {
+
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,35,72,0.25),
+            rgba(232,184,75,0.08)
+        );
+
+    border: 1px solid rgba(255,35,72,0.25);
+
+    box-shadow:
+        0 0 30px rgba(255,35,72,0.12);
+}
+
+
+.brand h1 {
+
+    font-size: 21px;
+
+    letter-spacing: 2px;
+
+    font-weight: 800;
+}
+
+
+.brand h1 span {
+
+    color: var(--red);
+
+}
+
+
+.brand p {
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    color: var(--muted);
+
+    margin-top: 3px;
+}
+
+
+.icon-button {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 14px;
+
+    background: var(--card);
+
+    border: 1px solid var(--card-border);
+
+    color: var(--white);
+
+    font-size: 20px;
+}
+
+
+/* TODAY */
+
+.today-card {
+
+    position: relative;
+
+    padding: 25px;
+
+    border-radius: var(--radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,35,72,0.12),
+            rgba(255,255,255,0.035)
+        );
+
+    border: 1px solid rgba(255,255,255,0.09);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 20px 60px rgba(0,0,0,0.3);
+
+    overflow: hidden;
+}
+
+
+.today-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    right: -50px;
+    top: -50px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+
+    filter: blur(70px);
+
+    opacity: 0.15;
+}
+
+
+.today-top {
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: var(--muted);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.status-dot {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+
+    box-shadow:
+        0 0 12px var(--red);
+}
+
+
+.today-date {
+
+    margin-top: 12px;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+}
+
+
+.lunar-date {
+
+    margin-top: 7px;
+
+    color: var(--gold-light);
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.today-line {
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1),
+            transparent
+        );
+
+    margin: 20px 0;
+}
+
+
+.today-info {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 10px;
+}
+
+
+.today-info small {
+
+    display: block;
+
+    font-size: 8px;
+
+    color: var(--muted);
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+}
+
+
+.today-info strong {
+
+    font-size: 12px;
+}
+
+
+/* SECTION */
+
+.section-title {
+
+    display: flex;
+
+    gap: 8px;
+
+    align-items: center;
+
+    margin:
+
+        28px
+        3px
+        12px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+/* COUNTDOWN */
+
+.countdown-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+
+.countdown-card {
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--card-border);
+
+    backdrop-filter: blur(15px);
+
+    transition: transform 0.2s;
+}
+
+
+.countdown-card:active {
+
+    transform: scale(0.97);
+}
+
+
+.countdown-card.primary {
+
+    border-color:
+        rgba(255,35,72,0.25);
+
+    box-shadow:
+        0 0 30px rgba(255,35,72,0.07);
+}
+
+
+.card-label {
+
+    font-size: 8px;
+
+    letter-spacing: 1.5px;
+
+    color: var(--muted);
+}
+
+
+.card-symbol {
+
+    font-size: 25px;
+
+    margin:
+        14px 0 10px;
+}
+
+
+.countdown-number {
+
+    font-size: 22px;
+
+    font-weight: 800;
+}
+
+
+.countdown-date {
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    margin-top: 5px;
+}
+
+
+.progress {
+
+    height: 3px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border-radius: 10px;
+
+    margin-top: 17px;
+
+    overflow: hidden;
+}
+
+
+.progress div {
+
+    height: 100%;
+
+    width: 50%;
+
+    background: var(--red);
+
+    box-shadow:
+        0 0 10px var(--red);
+
+    transition: width 0.5s;
+}
+
+
+.progress.gold div {
+
+    background: var(--gold);
+
+    box-shadow:
+        0 0 10px var(--gold);
+}
+
+
+/* ACTIONS */
+
+.actions {
+
+    display: grid;
+
+    gap: 10px;
+}
+
+
+.action-button {
+
+    display: grid;
+
+    grid-template-columns:
+        45px 1fr auto;
+
+    grid-template-rows:
+        1fr 1fr;
+
+    align-items: center;
+
+    text-align: left;
+
+    padding: 13px 15px;
+
+    border-radius: 17px;
+
+    color: var(--white);
+
+    background: var(--card);
+
+    border: 1px solid var(--card-border);
+
+    transition: 0.2s;
+}
+
+
+.action-button:active {
+
+    transform: scale(0.98);
+
+    background:
+        rgba(255,35,72,0.08);
+}
+
+
+.action-button span {
+
+    grid-row: 1 / 3;
+
+    font-size: 23px;
+}
+
+
+.action-button strong {
+
+    font-size: 12px;
+}
+
+
+.action-button small {
+
+    color: var(--muted);
+
+    font-size: 8px;
+}
+
+
+/* REMINDER */
+
+.reminder-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-top: 22px;
+
+    padding: 17px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(232,184,75,0.08),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid
+        rgba(232,184,75,0.16);
+}
+
+
+.reminder-icon {
+
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 14px;
+
+    background:
+        rgba(232,184,75,0.08);
+
+    font-size: 20px;
+}
+
+
+.reminder-content span {
+
+    display: block;
+
+    font-size: 8px;
+
+    color: var(--gold);
+
+    letter-spacing: 1px;
+
+    margin-bottom: 4px;
+}
+
+
+.reminder-content strong {
+
+    display: block;
+
+    font-size: 11px;
+}
+
+
+.reminder-content small {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 8px;
+
+    margin-top: 4px;
+}
+
+
+/* FOOTER */
+
+footer {
+
+    text-align: center;
+
+    margin-top: 35px;
+
+    color: var(--muted);
+}
+
+
+.footer-line {
+
+    width: 80px;
+
+    height: 1px;
+
+    margin: auto auto 15px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
+}
+
+
+footer p {
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+footer strong {
+
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 11px;
+
+    color: var(--gold-light);
+
+    letter-spacing: 1px;
+}
+
+
+footer small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 7px;
+}
+
+
+/* MODAL */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,0.72);
+
+    backdrop-filter: blur(12px);
+}
+
+
+.modal.hidden {
+
+    display: none;
+}
+
+
+.modal-box {
+
+    width: min(100%, 380px);
+
+    position: relative;
+
+    padding: 28px;
+
+    border-radius: 25px;
+
+    background:
+        #151116;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.6);
+}
+
+
+.close-button {
+
+    position: absolute;
+
+    right: 15px;
+    top: 12px;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    background: var(--card);
+
+    color: white;
+
+    font-size: 22px;
+}
+
+
+.modal-icon {
+
+    font-size: 30px;
+
+    margin-bottom: 12px;
+}
+
+
+.modal-box h2 {
+
+    font-size: 20px;
+
+    margin-bottom: 8px;
+}
+
+
+.modal-box p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    margin-bottom: 22px;
+}
+
+
+.modal-box label {
+
+    display: block;
+
+    font-size: 10px;
+
+    color: var(--muted);
+
+    margin-bottom: 7px;
+}
+
+
+.modal-box input {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 13px;
+
+    border: 1px solid
+        rgba(255,255,255,0.1);
+
+    background:
+        rgba(255,255,255,0.05);
+
+    color: white;
+
+    font-size: 16px;
+}
+
+
+.save-button {
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--red),
+            #b80f2c
+        );
+
+    color: white;
+
+    font-weight: 800;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(255,35,72,0.2);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 370px) {
+
+    .app {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+
+    .today-date {
+        font-size: 24px;
+    }
+
+    .countdown-card {
+        padding: 15px;
+    }
+
+    .countdown-number {
+        font-size: 18px;
+    }
+
+}
