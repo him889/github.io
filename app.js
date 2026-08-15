@@ -1,4 +1,4 @@
-/* =========================================
+./* =========================================
    IMLEK+ LUNAR REMINDER
    By : Tekhim
    ========================================= */
@@ -1218,6 +1218,70 @@ function showCalendarDay(
 
     try {
 
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+        const detail =
+            document.getElementById(
+                "lunarDetail"
+            );
+
+        const detailSolar =
+            document.getElementById(
+                "detailSolar"
+            );
+
+        const detailChinese =
+            document.getElementById(
+                "detailChinese"
+            );
+
+        const detailLunar =
+            document.getElementById(
+                "detailLunar"
+            );
+
+        const detailSpecial =
+            document.getElementById(
+                "detailSpecial"
+            );
+
+        const detailSpecialTitle =
+            document.getElementById(
+                "detailSpecialTitle"
+            );
+
+        const detailSpecialText =
+            document.getElementById(
+                "detailSpecialText"
+            );
+
+        const detailYear =
+            document.getElementById(
+                "detailYear"
+            );
+
+        const detailZodiac =
+            document.getElementById(
+                "detailZodiac"
+            );
+
+        const detailMonth =
+            document.getElementById(
+                "detailMonth"
+            );
+
+        const detailDay =
+            document.getElementById(
+                "detailDay"
+            );
+
+
+        /* =========================
+           SOLAR
+        ========================= */
+
         const solar =
             Solar.fromYmd(
                 year,
@@ -1226,74 +1290,188 @@ function showCalendarDay(
             );
 
 
+        /* =========================
+           LUNAR
+        ========================= */
+
         const lunar =
             solar.getLunar();
 
 
-        let message =
-            `${day} ${getIndonesianMonth(month)} ${year}\n\n`;
+        /* =========================
+           DATE OBJECT
+        ========================= */
+
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
 
 
-        message +=
-            `Lunar: `;
+        /* =========================
+           MASEHI
+        ========================= */
+
+        detailSolar.textContent =
+            date.toLocaleDateString(
+                "id-ID",
+                {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
 
 
-        message +=
-            `${lunar.getYear()}年 `;
+        /* =========================
+           LUNAR CHINESE
+        ========================= */
+
+        detailChinese.textContent =
+            lunar.getDayInChinese();
 
 
-        message +=
-            `${lunar.getMonthInChinese()}月`;
+        /* =========================
+           LUNAR TEXT
+        ========================= */
 
-
-        message +=
+        detailLunar.textContent =
+            `${lunar.getYear()}年 ` +
+            `${lunar.getMonthInChinese()}月` +
             `${lunar.getDayInChinese()}`;
 
 
-        /*
-           Tanggal 1
-        */
+        /* =========================
+           YEAR
+        ========================= */
+
+        detailYear.textContent =
+            lunar.getYear();
+
+
+        /* =========================
+           ZODIAC
+        ========================= */
+
+        detailZodiac.textContent =
+            getZodiac(
+                lunar.getYear()
+            );
+
+
+        /* =========================
+           MONTH
+        ========================= */
+
+        detailMonth.textContent =
+            `${lunar.getMonth()} ` +
+            `(${lunar.getMonthInChinese()}月)`;
+
+
+        /* =========================
+           DAY
+        ========================= */
+
+        detailDay.textContent =
+            lunar.getDay();
+
+
+        /* =========================
+           SPECIAL DAY
+        ========================= */
+
+        detailSpecial.classList.remove(
+            "gold"
+        );
+
 
         if (
             lunar.getDay() === 1
         ) {
 
-            message +=
-                "\n\n🧧 TANGGAL 1 IMLEK";
+            detailSpecialTitle.textContent =
+                "🧧 Tanggal 1 Imlek";
+
+
+            detailSpecialText.textContent =
+                "Hari sembahyang • Awal bulan Lunar";
+
+
+            detailSpecial.classList.remove(
+                "gold"
+            );
 
         }
 
-
-        /*
-           Tanggal 15
-        */
-
-        if (
+        else if (
             lunar.getDay() === 15
         ) {
 
-            message +=
-                "\n\n🌕 TANGGAL 15 IMLEK";
+            detailSpecialTitle.textContent =
+                "🌕 Tanggal 15 Imlek";
+
+
+            detailSpecialText.textContent =
+                "Hari sembahyang • Pertengahan bulan Lunar";
+
+
+            detailSpecial.classList.add(
+                "gold"
+            );
+
+        }
+
+        else {
+
+            detailSpecialTitle.textContent =
+                "🌙 Hari Lunar";
+
+
+            detailSpecialText.textContent =
+                "Tidak ada peringatan khusus";
+
+
+            detailSpecial.classList.remove(
+                "gold"
+            );
 
         }
 
 
-        alert(
-            message
+        /* =========================
+           OPEN PANEL
+        ========================= */
+
+        detail.classList.add(
+            "show"
         );
+
+
+        /*
+           Mencegah body ikut scroll
+           ketika panel terbuka
+        */
+
+        document.body.style.overflow =
+            "hidden";
+
 
     }
 
     catch (error) {
 
         console.error(
+            "Lunar detail error:",
             error
         );
 
     }
 
 }
-
+            
 
 /* =========================================
    PREVIOUS MONTH
