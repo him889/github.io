@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>IMLEK+</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --card: rgba(57, 255, 20, 0.08);
+  --border: rgba(57, 255, 20, 0.35);
+  --text: #39ff14;                  /* hijau muda menyala */
+  --muted: #00c853;                 /* hijau tua menyala */
+  --neon-purple: #ff1493;           /* pink neon */
+  --neon-purple-bright: #ff69b4;    /* pink lebih terang */
+  --maroon: #ff2d55;
+  --maroon-glow: #ff2d55;
+  --pink: #ff1493;
+  --gold: #ccff00;                  /* stabilo hijau-kuning */
+  --radius: 18px;
+}
+
+body.light {
+  --bg: #faf5ff;
+  --bg2: #ffffff;
+  --card: rgba(255,255,255,0.95);
+  --border: rgba(192, 132, 252, 0.25);
+  --text: #2e1065;
+  --muted: #7e22ce;
+  --neon-purple: #a855f7;
+  --neon-purple-bright: #c026d3;
+  --maroon: #e11d48;
+  --maroon-glow: #f43f5e;
+  --pink: #ec4899;
+  --gold: #f59e0b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+body.dark {
+  background: 
+    radial-gradient(ellipse at 15% 0%, rgba(57,255,20,0.15), transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(255,20,147,0.12), transparent 45%),
+    linear-gradient(180deg, #0f0f0f, #050505);
+}
+
+.app {
+  width: min(100%, 520px);
+  margin: auto;
+  padding: 20px 16px 100px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.brand-icon {
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(57,255,20,0.35), rgba(255,20,147,0.25));
+  border: 1px solid rgba(57,255,20,0.55);
+  box-shadow: 0 0 20px rgba(57,255,20,0.45);
+  font-size: 22px;
+}
+
+.brand h1 {
+  font-family: Orbitron, sans-serif;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  text-shadow: 0 0 14px rgba(57,255,20,0.8);
+}
+
+.brand h1 span { 
+  color: var(--maroon-glow); 
+  text-shadow: 0 0 12px rgba(255,45,85,0.9);
+}
+
+.brand p {
+  font-size: 10px;
+  color: var(--neon-purple-bright);
+  letter-spacing: 1.2px;
+  margin-top: 2px;
+  text-shadow: 0 0 8px rgba(255,20,147,0.7);
+}
+
+.icon-btn {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--neon-purple-bright);
+  font-size: 18px;
+  display: grid; place-items: center;
+  box-shadow: 0 0 14px rgba(57,255,20,0.3);
+  transition: 0.25s;
+}
+.icon-btn:hover {
+  box-shadow: 0 0 22px rgba(57,255,20,0.6);
+}
+
+.today-card {
+  padding: 22px;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, rgba(57,255,20,0.12), rgba(255,20,147,0.08));
+  border: 1px solid rgba(57,255,20,0.35);
+  box-shadow: 0 0 28px rgba(57,255,20,0.15), inset 0 0 22px rgba(57,255,20,0.05);
+  margin-bottom: 6px;
+}
+
+.today-top {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--maroon-glow);
+  box-shadow: 0 0 12px var(--maroon-glow);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 12px var(--maroon-glow); }
+  50% { opacity: 0.5; box-shadow: 0 0 20px var(--maroon-glow); }
+}
+
+.today-date {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 800;
+  text-shadow: 0 0 16px rgba(57,255,20,0.6);
+}
+
+.lunar-date {
+  margin-top: 4px;
+  color: var(--neon-purple-bright);
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 0 12px rgba(255,20,147,0.7);
+}
+
+.line {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(57,255,20,0.8), rgba(255,20,147,0.5), transparent);
+  margin: 16px 0;
+  box-shadow: 0 0 10px rgba(57,255,20,0.4);
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.info small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+
+.info strong {
+  font-size: 13px;
+  color: var(--neon-purple-bright);
+  text-shadow: 0 0 10px rgba(255,20,147,0.6);
+}
+
+.section {
+  margin: 26px 0 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--neon-purple-bright);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-shadow: 0 0 12px rgba(255,20,147,0.7);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.card {
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 16px rgba(57,255,20,0.12);
+  transition: 0.3s;
+}
+
+.card.primary { 
+  border-color: rgba(255,45,85,0.55); 
+  box-shadow: 0 0 22px rgba(255,45,85,0.25);
+}
+
+.card:hover {
+  box-shadow: 0 0 28px rgba(57,255,20,0.3);
+}
+
+.label {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.symbol { font-size: 24px; margin: 10px 0 6px; }
+
+.num { 
+  font-size: 20px; 
+  font-weight: 800; 
+  text-shadow: 0 0 14px rgba(57,255,20,0.6);
+}
+
+.date { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+.bar {
+  height: 4px;
+  background: rgba(128,128,128,0.2);
+  border-radius: 4px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  width: 0;
+  background: var(--maroon-glow);
+  box-shadow: 0 0 10px var(--maroon-glow);
+  transition: 0.4s;
+}
+
+.bar.gold div { 
+  background: var(--gold); 
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* ===== TOMBOL ACTION ===== */
+.actions {
+  display: grid;
+  gap: 10px;
+}
+
+.action-button {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 16px;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 16px rgba(57,255,20,0.14);
+  transition: 0.25s;
+}
+
+.action-button:hover {
+  border-color: rgba(57,255,20,0.55);
+  box-shadow: 0 0 26px rgba(57,255,20,0.35);
+}
+
+.action-button span {
+  grid-row: 1 / 3;
+  font-size: 22px;
+}
+
+.action-button strong {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.action-button small {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.reminder {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(57,255,20,0.10), rgba(255,20,147,0.08));
+  border: 1px solid rgba(57,255,20,0.30);
+  box-shadow: 0 0 20px rgba(57,255,20,0.15);
+  margin-top: 18px;
+}
+
+.reminder-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: rgba(57,255,20,0.15);
+  display: grid; place-items: center;
+  font-size: 20px;
+  box-shadow: 0 0 14px rgba(57,255,20,0.35);
+}
+
+.reminder strong { display: block; font-size: 13px; }
+.reminder small { font-size: 10px; color: var(--muted); }
+
+footer {
+  text-align: center;
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+footer strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--neon-purple-bright);
+  font-size: 12px;
+  text-shadow: 0 0 12px rgba(255,20,147,0.6);
+}
+
+/* ===== MODAL ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 99;
+  backdrop-filter: blur(6px);
+}
+
+.modal.hidden { display: none; }
+
+.box {
+  background: var(--bg2);
+  border: 1px solid rgba(57,255,20,0.45);
+  border-radius: 18px;
+  padding: 24px;
+  width: min(100%, 340px);
+  position: relative;
+  box-shadow: 0 0 45px rgba(57,255,20,0.25), 0 0 22px rgba(255,20,147,0.15);
+}
+
+.close {
+  position: absolute;
+  right: 12px; top: 10px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+}
+
+.box h2 { font-size: 18px; margin-bottom: 6px; text-shadow: 0 0 12px rgba(57,255,20,0.5); }
+.box p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+.box label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 6px; }
+
+.box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 16px;
+  box-shadow: inset 0 0 12px rgba(57,255,20,0.12);
+}
+
+.save {
+  width: 100%;
+  margin-top: 16px;
+  padding: 13px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--maroon-glow), #9f1239);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  border: none;
+  box-shadow: 0 0 22px rgba(255,45,85,0.55);
+  transition: 0.25s;
+}
+
+.save:hover {
+  box-shadow: 0 0 32px rgba(255,45,85,0.75);
+}
+
+/* ===== CALENDAR ===== */
+.cal {
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 22px rgba(57,255,20,0.14);
+}
+
+.cal-head {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.nav {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--neon-purple-bright);
+  font-size: 22px;
+  box-shadow: 0 0 12px rgba(57,255,20,0.25);
+}
+
+.cal-title { font-size: 14px; font-weight: 700; }
+.cal-title small {
+  display: block;
+  font-size: 11px;
+  color: var(--neon-purple-bright);
+  margin-top: 2px;
+}
+
+.today-btn {
+  display: block;
+  margin: 8px auto 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(57,255,20,0.12);
+  border: 1px solid rgba(57,255,20,0.40);
+  color: var(--neon-purple-bright);
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 0 14px rgba(57,255,20,0.25);
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.week span:first-child { color: var(--maroon-glow); }
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.day {
+  min-height: 48px;
+  padding: 4px 2px;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(128,128,128,0.07);
+  transition: 0.2s;
+}
+
+.day.empty { background: transparent; }
+
+.day .s { display: block; font-size: 13px; font-weight: 700; }
+.day .l { display: block; font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+.day.today {
+  border: 1.5px solid rgba(57,255,20,0.75);
+  background: rgba(57,255,20,0.10);
+  box-shadow: 0 0 14px rgba(57,255,20,0.3);
+}
+
+.day.first {
+  background: rgba(255,45,85,0.25);
+  border: 1.5px solid rgba(255,45,85,0.65);
+  box-shadow: 0 0 14px rgba(255,45,85,0.4);
+}
+
+.day.first .l { color: #ff8fa3; font-weight: 700; }
+
+.day.full {
+  background: rgba(204,255,0,0.18);
+  border: 1.5px solid rgba(204,255,0,0.65);
+  box-shadow: 0 0 14px rgba(204,255,0,0.4);
+}
+
+.day.full .l { color: #e6ff80; font-weight: 700; }
+
+/* ===== LEGEND ===== */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(57,255,20,0.15);
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot.red {
+  background: var(--maroon-glow);
+  box-shadow: 0 0 8px var(--maroon-glow);
+}
+
+.legend-dot.yellow {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.legend-dot.white {
+  background: #39ff14;
+  box-shadow: 0 0 8px rgba(57,255,20,0.7);
+}
+
+/* ===== AUDIO PLAYER (50% lebih kecil) ===== */
+.audio {
+  position: fixed;
+  bottom: 12px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  background: rgba(10,10,10,0.95);
+  padding: 5px 7px;
+  border-radius: 40px;
+  border: 1px solid rgba(57,255,20,0.40);
+  box-shadow: 0 0 18px rgba(57,255,20,0.25), 0 3px 12px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+}
+
+.audio button {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(57,255,20,0.15);
+  border: 1px solid rgba(57,255,20,0.45);
+  color: var(--neon-purple-bright);
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(57,255,20,0.3);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.audio button:hover {
+  background: rgba(57,255,20,0.35);
+  box-shadow: 0 0 14px rgba(57,255,20,0.6);
+  transform: scale(1.1);
+}
+
+.audio button:active {
+  transform: scale(0.92);
+}
+</style>
+</head>
+<body class="dark">
+<main class="app">
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">🧧</div>
+      <div>
+        <h1>IMLEK<span>+</span></h1>
+        <p>LUNAR CALENDAR & REMINDER</p>
+      </div>
+    </div>
+    <button class="icon-btn" id="themeBtn">◐</button>
+  </header>
+
+  <section class="today-card">
+    <div class="today-top"><span class="dot"></span> HARI INI</div>
+    <div class="today-date" id="todayDate">--</div>
+    <div class="lunar-date" id="todayLunar">Memuat...</div>
+    <div class="line"></div>
+    <div class="info">
+      <div><small>TAHUN</small><strong id="lunarYear">--</strong></div>
+      <div><small>SHIO</small><strong id="zodiac">--</strong></div>
+      <div><small>FASE</small><strong id="moonPhase">--</strong></div>
+    </div>
+  </section>
+
+  <div class="section">⏳ Countdown</div>
+  <div class="grid2">
+    <div class="card primary">
+      <div class="label">TANGGAL 1</div>
+      <div class="symbol">🧧</div>
+      <div class="num" id="nextFirstText">--</div>
+      <div class="date" id="nextFirstDate">--</div>
+      <div class="bar"><div id="firstProgress"></div></div>
+    </div>
+    <div class="card">
+      <div class="label">TANGGAL 15</div>
+      <div class="symbol">🌕</div>
+      <div class="num" id="nextFifteenthText">--</div>
+      <div class="date" id="nextFifteenthDate">--</div>
+      <div class="bar gold"><div id="fifteenthProgress"></div></div>
+    </div>
+  </div>
+
+  <div class="section">📅 Kalender Lunar</div>
+  <div class="cal">
+    <div class="cal-head">
+      <button class="nav" id="prevMonth">‹</button>
+      <div class="cal-title">
+        <span id="calMonth">Agustus 2026</span>
+        <small id="calLunar">Kalender Lunar</small>
+      </div>
+      <button class="nav" id="nextMonth">›</button>
+    </div>
+    <button class="today-btn" id="todayBtn">Kembali ke Hari Ini</button>
+    <div class="week">
+      <span>MIN</span><span>SEN</span><span>SEL</span><span>RAB</span><span>KAM</span><span>JUM</span><span>SAB</span>
+    </div>
+    <div class="days" id="calGrid"></div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-dot red"></span>
+        <span>Tanggal 1 Imlek</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot yellow"></span>
+        <span>Tanggal 15 Imlek</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot white"></span>
+        <span>Hari ini</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">⚡ Quick Action</div>
+  <section class="actions">
+    <button class="action-button" id="alarmBtn">
+      <span>🔔</span>
+      <strong>Pengingat</strong>
+      <small>Atur jam alarm</small>
+    </button>
+    <button class="action-button" id="icsBtn">
+      <span>📄</span>
+      <strong>Export .ICS</strong>
+      <small>Untuk calendar HP</small>
+    </button>
+  </section>
+
+  <div class="reminder">
+    <div class="reminder-icon">🙏</div>
+    <div>
+      <strong id="reminderText">Jangan sampai lupa sembahyang.</strong>
+      <small>Karena dewa tidak menyediakan fitur "lupa password".</small>
+    </div>
+  </div>
+
+  <footer>
+    <strong>By : Tekhim</strong>
+    <div style="margin-top:4px">v1.8 Final • Neon Edition</div>
+  </footer>
+</main>
+
+<div class="audio">
+  <button id="playBtn">▶</button>
+  <button id="pauseBtn">⏸</button>
+  <button id="stopBtn">⏹</button>
+</div>
+
+<div class="modal hidden" id="alarmModal">
+  <div class="box">
+    <button class="close" id="closeModal">×</button>
+    <h2>Pengaturan Pengingat</h2>
+    <p>Jam ini akan dipakai saat export file .ICS</p>
+    <label>Jam pengingat</label>
+    <input type="time" id="alarmTime" value="05:00">
+    <button class="save" id="saveAlarm">SIMPAN</button>
+  </div>
+</div>
+
+<audio id="bgAudio" loop>
+  <source src="Dewi-Kwan-Im.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
+<script>
+// Theme
+const themeBtn = document.getElementById("themeBtn");
+function setTheme(t) {
+  document.body.className = t;
+  localStorage.setItem("imlekTheme", t);
+  themeBtn.textContent = t === "dark" ? "◐" : "◑";
+}
+setTheme(localStorage.getItem("imlekTheme") || "dark");
+themeBtn.onclick = () => setTheme(document.body.classList.contains("dark") ? "light" : "dark");
+
+// Audio
+const audio = document.getElementById("bgAudio");
+document.getElementById("playBtn").onclick = () => audio.play().catch(()=>{});
+document.getElementById("pauseBtn").onclick = () => audio.pause();
+document.getElementById("stopBtn").onclick = () => { audio.pause(); audio.currentTime = 0; };
+
+// Helper
+function pad(n){ return n < 10 ? "0"+n : ""+n; }
+function formatDate(d){
+  return d.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+}
+function getZodiac(y){
+  return ["Monyet 🐒","Ayam 🐓","Anjing 🐕","Babi 🐖","Tikus 🐀","Kerbau 🐂","Macan 🐅","Kelinci 🐇","Naga 🐉","Ular 🐍","Kuda 🐎","Kambing 🐐"][y%12];
+}
+function lunarMonthName(m){
+  return ["","Bulan 1","Bulan 2","Bulan 3","Bulan 4","Bulan 5","Bulan 6","Bulan 7","Bulan 8","Bulan 9","Bulan 10","Bulan 11","Bulan 12"][Math.abs(m)]||"";
+}
+function lunarDayName(d){
+  return ["","Tanggal 1","Tanggal 2","Tanggal 3","Tanggal 4","Tanggal 5","Tanggal 6","Tanggal 7","Tanggal 8","Tanggal 9","Tanggal 10","Tanggal 11","Tanggal 12","Tanggal 13","Tanggal 14","Tanggal 15","Tanggal 16","Tanggal 17","Tanggal 18","Tanggal 19","Tanggal 20","Tanggal 21","Tanggal 22","Tanggal 23","Tanggal 24","Tanggal 25","Tanggal 26","Tanggal 27","Tanggal 28","Tanggal 29","Tanggal 30"][d]||"";
+}
+
+function updateToday(){
+  const now = new Date();
+  document.getElementById("todayDate").textContent = formatDate(now);
+  try{
+    const lunar = Solar.fromYmd(now.getFullYear(), now.getMonth()+1, now.getDate()).getLunar();
+    const ly = lunar.getYear(), lm = lunar.getMonth(), ld = lunar.getDay();
+    document.getElementById("todayLunar").textContent = lunarMonthName(lm) + " • " + lunarDayName(ld);
+    document.getElementById("lunarYear").textContent = ly;
+    document.getElementById("zodiac").textContent = getZodiac(ly);
+    document.getElementById("moonPhase").textContent = ld===1 ? "🌑 Baru" : ld===15 ? "🌕 Purnama" : "🌙 Lunar";
+    document.getElementById("reminderText").textContent = ld===1 ? "🙏 Hari ini tanggal 1 Imlek. Jangan lupa sembahyang." : ld===15 ? "🌕 Hari ini tanggal 15 Imlek. Jangan lupa sembahyang." : "Jangan sampai lupa sembahyang.";
+  }catch(e){
+    document.getElementById("todayLunar").textContent = "Lunar error";
+  }
+}
+
+function findNext(target){
+  const now = new Date();
+  for(let i=0;i<=40;i++){
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate()+i);
+    const lunar = Solar.fromYmd(d.getFullYear(), d.getMonth()+1, d.getDate()).getLunar();
+    if(lunar.getDay() === target) return d;
+  }
+  return null;
+}
+
+function updateCountdown(){
+  const f = findNext(1);
+  const t = findNext(15);
+  if(f){
+    const days = Math.max(0, Math.floor((f - new Date())/86400000));
+    document.getElementById("nextFirstText").textContent = days + " hari";
+    document.getElementById("nextFirstDate").textContent = formatDate(f);
+    document.getElementById("firstProgress").style.width = Math.max(5, 100 - days/30*100) + "%";
+  }
+  if(t){
+    const days = Math.max(0, Math.floor((t - new Date())/86400000));
+    document.getElementById("nextFifteenthText").textContent = days + " hari";
+    document.getElementById("nextFifteenthDate").textContent = formatDate(t);
+    document.getElementById("fifteenthProgress").style.width = Math.max(5, 100 - days/30*100) + "%";
+  }
+}
+
+// Alarm Modal
+document.getElementById("alarmBtn").onclick = () => {
+  document.getElementById("alarmModal").classList.remove("hidden");
+  const s = localStorage.getItem("imlekAlarm");
+  if(s) document.getElementById("alarmTime").value = s;
+};
+document.getElementById("closeModal").onclick = () => document.getElementById("alarmModal").classList.add("hidden");
+document.getElementById("saveAlarm").onclick = () => {
+  localStorage.setItem("imlekAlarm", document.getElementById("alarmTime").value);
+  document.getElementById("alarmModal").classList.add("hidden");
+  alert("Jam disimpan!");
+};
+
+// ICS
+document.getElementById("icsBtn").onclick = function(){
+  const d1 = findNext(1);
+  const d15 = findNext(15);
+  if(!d1 || !d15){ alert("Tanggal tidak ditemukan"); return; }
+
+  let time = localStorage.getItem("imlekAlarm") || "05:00";
+  let [hh, mm] = time.split(":").map(Number);
+  if(isNaN(hh)) hh = 5;
+  if(isNaN(mm)) mm = 0;
+
+  function icsDate(date, h, m){
+    return date.getFullYear() + pad(date.getMonth()+1) + pad(date.getDate()) + "T" + pad(h) + pad(m) + "00";
+  }
+
+  function makeEvent(title, date, uid){
+    const start = icsDate(date, hh, mm);
+    const endDate = new Date(date);
+    endDate.setHours(hh+1, mm, 0, 0);
+    const end = icsDate(endDate, endDate.getHours(), endDate.getMinutes());
+    const now = new Date();
+    const stamp = icsDate(now, now.getHours(), now.getMinutes());
+
+    return [
+      "BEGIN:VEVENT",
+      "UID:" + uid + "@imlek.local",
+      "DTSTAMP:" + stamp,
+      "DTSTART:" + start,
+      "DTEND:" + end,
+      "SUMMARY:" + title,
+      "DESCRIPTION:Pengingat dari IMLEK+",
+      "STATUS:CONFIRMED",
+      "BEGIN:VALARM",
+      "ACTION:DISPLAY",
+      "DESCRIPTION:" + title,
+      "TRIGGER:-PT0M",
+      "END:VALARM",
+      "END:VEVENT"
+    ].join("\r\n");
+  }
+
+  const content = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//IMLEK+//ID",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    makeEvent("Sembahyang Tanggal 1 Imlek", d1, "tgl1-" + Date.now()),
+    makeEvent("Sembahyang Tanggal 15 Imlek", d15, "tgl15-" + Date.now()),
+    "END:VCALENDAR"
+  ].join("\r\n");
+
+  const blob = new Blob([content], {type:"text/calendar;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "Imlek-Reminder.ics";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+// Calendar
+let cy, cm;
+function renderCal(){
+  const grid = document.getElementById("calGrid");
+  grid.innerHTML = "";
+  document.getElementById("calMonth").textContent = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"][cm] + " " + cy;
+  try{
+    const l = Solar.fromYmd(cy, cm+1, 1).getLunar();
+    document.getElementById("calLunar").textContent = "Lunar " + l.getYear() + " • " + l.getMonthInChinese() + "月";
+  }catch(e){}
+  const first = new Date(cy, cm, 1);
+  const last = new Date(cy, cm+1, 0);
+  const startDay = first.getDay();
+  for(let i=0;i<startDay;i++){
+    const e = document.createElement("div");
+    e.className = "day empty";
+    grid.appendChild(e);
+  }
+  const today = new Date();
+  for(let d=1;d<=last.getDate();d++){
+    const cell = document.createElement("div");
+    cell.className = "day";
+    const s = document.createElement("span");
+    s.className = "s";
+    s.textContent = d;
+    const l = document.createElement("span");
+    l.className = "l";
+    try{
+      const lunar = Solar.fromYmd(cy, cm+1, d).getLunar();
+      const day = lunar.getDay();
+      if(day === 1){ l.textContent = "初一"; cell.classList.add("first"); }
+      else if(day === 15){ l.textContent = "十五"; cell.classList.add("full"); }
+      else l.textContent = lunar.getDayInChinese();
+    }catch(e){ l.textContent = "-"; }
+    if(d === today.getDate() && cm === today.getMonth() && cy === today.getFullYear()) cell.classList.add("today");
+    cell.appendChild(s);
+    cell.appendChild(l);
+    grid.appendChild(cell);
+  }
+}
+document.getElementById("prevMonth").onclick = () => { cm--; if(cm<0){cm=11;cy--;} renderCal(); };
+document.getElementById("nextMonth").onclick = () => { cm++; if(cm>11){cm=0;cy++;} renderCal(); };
+document.getElementById("todayBtn").onclick = () => { const n=new Date(); cy=n.getFullYear(); cm=n.getMonth(); renderCal(); };
+
+// Start
+updateToday();
+updateCountdown();
+cy = new Date().getFullYear();
+cm = new Date().getMonth();
+renderCal();
+setInterval(()=>{ updateToday(); updateCountdown(); }, 60000);
+</script>
+</body>
+      </html>
