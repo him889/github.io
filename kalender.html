@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#05050f">
+<title>IMLEK+</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   IMLEK+ CSS
+   Tema: Futuristic Lunar Calendar
+   ========================================================= */
+
+:root{
+  --bg:#05050f;
+  --bg2:#0c0c1a;
+  --text:#fff;
+  --muted:#94a3b8;
+
+  --cyan:#00f5ff;
+  --green:#39ff14;
+  --pink:#ff2bd6;
+  --purple:#a855f7;
+  --gold:#fbbf24;
+
+  --border:2.5px;
+  --radius:20px;
+
+  --shadow:0 10px 28px rgba(0,0,0,.55);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(ellipse at 20% -10%,rgba(0,245,255,.18),transparent 50%),
+    radial-gradient(ellipse at 90% 10%,rgba(255,43,214,.16),transparent 45%),
+    radial-gradient(ellipse at 50% 100%,rgba(168,85,247,.14),transparent 50%),
+    linear-gradient(180deg,#07071a,#030308);
+  transition:.3s;
+}
+
+body.light{
+  --bg:#f0f9ff;
+  --bg2:#fff;
+  --text:#0c4a6e;
+  --muted:#0284c7;
+
+  background:linear-gradient(180deg,#e0f2fe,#f0f9ff);
+}
+
+/* ---------- GENERAL ---------- */
+
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+
+.app{
+  width:min(100%,520px);
+  margin:auto;
+  padding:22px 16px 110px;
+}
+
+.section{
+  margin:30px 0 14px;
+  font-size:13px;
+  font-weight:800;
+  color:var(--cyan);
+  letter-spacing:.7px;
+  text-shadow:0 0 10px rgba(0,245,255,.5);
+}
+
+/* ---------- HEADER ---------- */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:26px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.brand-icon{
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:linear-gradient(145deg,rgba(0,245,255,.35),rgba(255,43,214,.25));
+  border:var(--border) solid var(--cyan);
+  box-shadow:0 0 25px rgba(0,245,255,.45),var(--shadow);
+  font-size:24px;
+}
+
+.brand h1{
+  font-family:Orbitron,sans-serif;
+  font-size:22px;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.brand h1 span{
+  background:linear-gradient(90deg,var(--pink),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.brand p{
+  margin-top:3px;
+  font-size:9px;
+  letter-spacing:1.4px;
+  color:var(--cyan);
+}
+
+.icon-btn{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:rgba(255,255,255,.06);
+  border:var(--border) solid var(--cyan);
+  color:var(--cyan);
+  font-size:18px;
+  box-shadow:0 0 18px rgba(0,245,255,.3);
+}
+
+/* ---------- TODAY ---------- */
+
+.today-card{
+  padding:24px;
+  border-radius:22px;
+  border:3px solid var(--cyan);
+  background:linear-gradient(160deg,rgba(0,245,255,.12),rgba(255,43,214,.08));
+  box-shadow:
+    0 12px 40px rgba(0,0,0,.65),
+    0 0 30px rgba(0,245,255,.3);
+}
+
+.today-top{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:10px;
+  letter-spacing:2.5px;
+  font-weight:800;
+  color:var(--cyan);
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--pink);
+  box-shadow:0 0 14px var(--pink);
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  50%{opacity:.5;transform:scale(.8)}
+}
+
+.today-date{
+  margin-top:10px;
+  font-size:25px;
+  font-weight:800;
+  color:#fff;
+  text-shadow:0 0 14px rgba(255,255,255,.35);
+}
+
+.lunar-date{
+  margin-top:7px;
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+}
+
+.line{
+  height:2px;
+  margin:18px 0;
+  background:linear-gradient(90deg,var(--cyan),var(--pink),transparent);
+}
+
+.info{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.info small,
+.label{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+.info strong{
+  display:block;
+  margin-top:4px;
+  font-size:14px;
+  color:#fff;
+}
+
+/* ---------- COUNTDOWN ---------- */
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.card{
+  padding:18px;
+  border-radius:18px;
+  border:3px solid var(--green);
+  background:rgba(255,255,255,.04);
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.55),
+    0 0 20px rgba(57,255,20,.18);
+}
+
+.card.primary{
+  border-color:var(--pink);
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.55),
+    0 0 22px rgba(255,43,214,.3);
+}
+
+.symbol{
+  margin:12px 0 8px;
+  font-size:26px;
+}
+
+.num{
+  font-size:22px;
+  font-weight:800;
+  color:var(--green);
+  text-shadow:
+    0 0 6px var(--green),
+    0 0 16px rgba(57,255,20,.65);
+}
+
+.date{
+  margin-top:4px;
+  font-size:10px;
+  color:#fff;
+}
+
+.bar{
+  height:6px;
+  margin-top:14px;
+  overflow:hidden;
+  border-radius:10px;
+  background:rgba(255,255,255,.1);
+}
+
+.bar div{
+  width:0;
+  height:100%;
+  border-radius:10px;
+  background:var(--pink);
+  box-shadow:0 0 12px var(--pink);
+  transition:.5s;
+}
+
+.bar.gold div{
+  background:var(--green);
+  box-shadow:0 0 14px var(--green);
+}
+
+/* ---------- CALENDAR ---------- */
+
+.cal{
+  padding:16px;
+  border-radius:20px;
+  border:3px solid var(--purple);
+  background:rgba(255,255,255,.035);
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.55),
+    0 0 24px rgba(168,85,247,.25);
+}
+
+.cal-head{
+  display:grid;
+  grid-template-columns:42px 1fr 42px;
+  align-items:center;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.nav{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  border:2px solid var(--cyan);
+  color:var(--cyan);
+  font-size:22px;
+}
+
+.cal-title{
+  font-size:15px;
+  font-weight:800;
+  color:#fff;
+}
+
+.cal-title small{
+  display:block;
+  margin-top:3px;
+  color:var(--pink);
+  font-size:10px;
+}
+
+.today-btn{
+  display:block;
+  margin:10px auto 14px;
+  padding:8px 18px;
+  border-radius:30px;
+  background:rgba(0,245,255,.1);
+  border:2px solid var(--cyan);
+  color:var(--cyan);
+  font-size:11px;
+  font-weight:800;
+}
+
+.week,
+.days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  text-align:center;
+}
+
+.week{
+  margin-bottom:8px;
+  font-size:10px;
+  color:var(--muted);
+}
+
+.week span:first-child{
+  color:var(--pink);
+}
+
+.days{
+  gap:5px;
+}
+
+.day{
+  min-height:50px;
+  padding:5px 2px;
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid transparent;
+}
+
+.day.empty{
+  background:transparent;
+}
+
+.day .s{
+  display:block;
+  font-size:13px;
+  font-weight:800;
+  color:#fff;
+}
+
+.day .l{
+  display:block;
+  margin-top:3px;
+  font-size:9px;
+  color:var(--muted);
+}
+
+.day.today{
+  border:2px solid var(--cyan);
+  background:rgba(0,245,255,.16);
+  box-shadow:0 0 14px rgba(0,245,255,.4);
+}
+
+.day.first{
+  border:2px solid var(--pink);
+  background:rgba(255,43,214,.18);
+  box-shadow:0 0 14px rgba(255,43,214,.3);
+}
+
+.day.first .l{
+  color:#f9a8d4;
+  font-weight:800;
+}
+
+.day.full{
+  border:2px solid var(--gold);
+  background:rgba(251,191,36,.18);
+  box-shadow:0 0 14px rgba(251,191,36,.3);
+}
+
+.day.full .l{
+  color:#fde68a;
+  font-weight:800;
+}
+
+/* ---------- LEGEND ---------- */
+
+.legend{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.15);
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  color:var(--muted);
+}
+
+.legend-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+}
+
+.legend-dot.red{
+  background:var(--pink);
+  box-shadow:0 0 10px var(--pink);
+}
+
+.legend-dot.yellow{
+  background:var(--gold);
+  box-shadow:0 0 10px var(--gold);
+}
+
+.legend-dot.white{
+  background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);
+}
+
+/* ---------- QUICK ACTION ---------- */
+
+.actions{
+  display:grid;
+  gap:12px;
+}
+
+.action-button{
+  display:grid;
+  grid-template-columns:52px 1fr auto;
+  grid-template-rows:auto auto;
+  align-items:center;
+  text-align:left;
+  padding:16px 18px;
+  border-radius:18px;
+  color:#fff;
+  background:rgba(255,255,255,.04);
+  border:3px solid var(--pink);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.5),
+    0 0 18px rgba(255,43,214,.2);
+}
+
+.action-button span{
+  grid-row:1/3;
+  font-size:24px;
+}
+
+.action-button strong{
+  font-size:14px;
+  color:#fff;
+}
+
+.action-button small{
+  margin-top:3px;
+  color:#cbd5e1;
+  font-size:11px;
+}
+
+/* ---------- REMINDER ---------- */
+
+.reminder{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  margin-top:20px;
+  padding:16px;
+  border-radius:18px;
+  border:2px solid var(--cyan);
+  background:linear-gradient(135deg,rgba(0,245,255,.1),rgba(255,43,214,.08));
+  box-shadow:0 0 18px rgba(0,245,255,.2);
+}
+
+.reminder-icon{
+  width:46px;
+  height:46px;
+  flex-shrink:0;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:rgba(0,245,255,.15);
+  border:1.5px solid var(--cyan);
+  font-size:22px;
+}
+
+.reminder strong{
+  display:block;
+  font-size:13px;
+  color:#fff;
+}
+
+.reminder small{
+  display:block;
+  margin-top:2px;
+  font-size:10px;
+  color:#cbd5e1;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer{
+  margin-top:32px;
+  text-align:center;
+  color:#64748b;
+  font-size:10px;
+}
+
+footer strong{
+  display:block;
+  margin-top:5px;
+  color:var(--cyan);
+  font-size:13px;
+}
+
+/* ---------- MODAL ---------- */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:99;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(10px);
+}
+
+.modal.hidden{
+  display:none;
+}
+
+.box{
+  width:min(100%,360px);
+  padding:26px;
+  position:relative;
+  border-radius:22px;
+  border:3px solid var(--cyan);
+  background:var(--bg2);
+  box-shadow:0 20px 50px rgba(0,0,0,.7),0 0 30px rgba(0,245,255,.25);
+}
+
+.close{
+  position:absolute;
+  right:14px;
+  top:12px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.2);
+  color:#fff;
+  font-size:18px;
+}
+
+.box h2{
+  margin-bottom:6px;
+  font-size:19px;
+  color:#fff;
+}
+
+.box p{
+  margin-bottom:18px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.box label{
+  display:block;
+  margin-bottom:7px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.box input{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  border:2px solid var(--cyan);
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  font-size:16px;
+}
+
+.save{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--cyan),#0ea5e9);
+  color:#000;
+  font-weight:800;
+  box-shadow:0 0 25px rgba(0,245,255,.45);
+}
+
+/* ---------- AUDIO ---------- */
+
+.audio{
+  position:fixed;
+  right:12px;
+  bottom:14px;
+  z-index:20;
+  display:flex;
+  gap:6px;
+  padding:6px 8px;
+  border-radius:40px;
+  background:rgba(5,5,15,.94);
+  border:2px solid var(--cyan);
+  box-shadow:0 0 20px rgba(0,245,255,.3);
+}
+
+.audio button{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:1px solid var(--cyan);
+  background:rgba(0,245,255,.12);
+  color:var(--cyan);
+  font-size:10px;
+}
+
+/* ---------- LIGHT MODE ---------- */
+
+body.light .today-card,
+body.light .card,
+body.light .cal,
+body.light .action-button,
+body.light .reminder{
+  background:#fff;
+}
+
+body.light .today-date,
+body.light .lunar-date,
+body.light .num,
+body.light .date,
+body.light .day .s,
+body.light .cal-title,
+body.light .action-button strong,
+body.light .reminder strong{
+  color:#0f172a;
+  text-shadow:none;
+}
+
+body.light .num{
+  color:#16a34a;
+}
+
+body.light .brand-icon{
+  box-shadow:0 0 18px rgba(14,165,233,.2);
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:380px){
+  .app{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .grid2{
+    gap:9px;
+  }
+
+  .card{
+    padding:14px;
+  }
+
+  .today-card{
+    padding:20px;
+  }
+
+  .today-date{
+    font-size:21px;
+  }
+
+  .day{
+    min-height:46px;
+  }
+}
+</style>
+</head>
+
+<body class="dark">
+
+<main class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">🧧</div>
+      <div>
+        <h1>IMLEK<span>+</span></h1>
+        <p>LUNAR CALENDAR & REMINDER</p>
+      </div>
+    </div>
+
+    <button class="icon-btn" id="themeBtn">◐</button>
+  </header>
+
+
+  <!-- TODAY -->
+  <section class="today-card">
+
+    <div class="today-top">
+      <span class="dot"></span>
+      HARI INI
+    </div>
+
+    <div class="today-date" id="todayDate">--</div>
+
+    <div class="lunar-date" id="todayLunar">
+      Memuat...
+    </div>
+
+    <div class="line"></div>
+
+    <div class="info">
+      <div>
+        <small>TAHUN</small>
+        <strong id="lunarYear">--</strong>
+      </div>
+
+      <div>
+        <small>SHIO</small>
+        <strong id="zodiac">--</strong>
+      </div>
+
+      <div>
+        <small>FASE</small>
+        <strong id="moonPhase">--</strong>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- COUNTDOWN -->
+  <div class="section">⏳ Countdown</div>
+
+  <div class="grid2">
+
+    <div class="card primary">
+      <div class="label">TANGGAL 1</div>
+      <div class="symbol">🧧</div>
+
+      <div class="num" id="nextFirstText">--</div>
+
+      <div class="date" id="nextFirstDate">--</div>
+
+      <div class="bar">
+        <div id="firstProgress"></div>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="label">TANGGAL 15</div>
+      <div class="symbol">🌕</div>
+
+      <div class="num" id="nextFifteenthText">--</div>
+
+      <div class="date" id="nextFifteenthDate">--</div>
+
+      <div class="bar gold">
+        <div id="fifteenthProgress"></div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- CALENDAR -->
+  <div class="section">📅 Kalender Lunar</div>
+
+  <div class="cal">
+
+    <div class="cal-head">
+
+      <button class="nav" id="prevMonth">‹</button>
+
+      <div class="cal-title">
+        <span id="calMonth">Agustus 2026</span>
+        <small id="calLunar">Kalender Lunar</small>
+      </div>
+
+      <button class="nav" id="nextMonth">›</button>
+
+    </div>
+
+
+    <button class="today-btn" id="todayBtn">
+      Kembali ke Hari Ini
+    </button>
+
+
+    <div class="week">
+      <span>MIN</span>
+      <span>SEN</span>
+      <span>SEL</span>
+      <span>RAB</span>
+      <span>KAM</span>
+      <span>JUM</span>
+      <span>SAB</span>
+    </div>
+
+
+    <div class="days" id="calGrid"></div>
+
+
+    <div class="legend">
+
+      <div class="legend-item">
+        <span class="legend-dot red"></span>
+        Tanggal 1 Imlek
+      </div>
+
+      <div class="legend-item">
+        <span class="legend-dot yellow"></span>
+        Tanggal 15 Imlek
+      </div>
+
+      <div class="legend-item">
+        <span class="legend-dot white"></span>
+        Hari ini
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- QUICK ACTION -->
+  <div class="section">⚡ Quick Action</div>
+
+  <section class="actions">
+
+    <button class="action-button" id="alarmBtn">
+      <span>🔔</span>
+      <strong>Pengingat</strong>
+      <small>Atur jam alarm</small>
+    </button>
+
+    <button class="action-button" id="icsBtn">
+      <span>📄</span>
+      <strong>Export .ICS (10 Tahun)</strong>
+      <small>Semua Tanggal 1 & 15</small>
+    </button>
+
+  </section>
+
+
+  <!-- REMINDER -->
+  <div class="reminder">
+
+    <div class="reminder-icon">🙏</div>
+
+    <div>
+      <strong id="reminderText">
+        Jangan sampai lupa sembahyang.
+      </strong>
+
+      <small>
+        Karena dewa tidak menyediakan fitur "lupa password".
+      </small>
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>By : Tekhim</strong>
+    <div style="margin-top:4px">
+      v2.2 • 10 Tahun ICS
+    </div>
+  </footer>
+
+</main>
+
+
+<!-- AUDIO CONTROL -->
+<div class="audio">
+  <button id="playBtn">▶</button>
+  <button id="pauseBtn">⏸</button>
+  <button id="stopBtn">⏹</button>
+</div>
+
+
+<!-- ALARM MODAL -->
+<div class="modal hidden" id="alarmModal">
+
+  <div class="box">
+
+    <button class="close" id="closeModal">×</button>
+
+    <h2>Pengaturan Pengingat</h2>
+
+    <p>
+      Jam ini akan dipakai untuk semua event di file .ICS
+    </p>
+
+    <label>Jam pengingat</label>
+
+    <input type="time" id="alarmTime" value="05:00">
+
+    <button class="save" id="saveAlarm">
+      SIMPAN
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- AUDIO -->
+<audio id="bgAudio" loop>
+  <source src="Dewi-Kwan-Im.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- LUNAR JAVASCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
+
+<script>
+/* =========================================================
+   IMLEK+ JAVASCRIPT
+   ========================================================= */
+
+/* ---------- THEME ---------- */
+
+const themeBtn = document.getElementById("themeBtn");
+
+function setTheme(theme){
+  document.body.className = theme;
+  localStorage.setItem("imlekTheme",theme);
+  themeBtn.textContent = theme==="dark" ? "◐" : "◑";
+}
+
+setTheme(localStorage.getItem("imlekTheme") || "dark");
+
+themeBtn.onclick = () => {
+  setTheme(
+    document.body.classList.contains("dark")
+      ? "light"
+      : "dark"
+  );
+};
+
+
+/* ---------- AUDIO ---------- */
+
+const audio = document.getElementById("bgAudio");
+
+document.getElementById("playBtn").onclick = () => {
+  audio.play().catch(()=>{});
+};
+
+document.getElementById("pauseBtn").onclick = () => {
+  audio.pause();
+};
+
+document.getElementById("stopBtn").onclick = () => {
+  audio.pause();
+  audio.currentTime = 0;
+};
+
+
+/* ---------- HELPER ---------- */
+
+function pad(n){
+  return n < 10 ? "0"+n : String(n);
+}
+
+function formatDate(date){
+  return date.toLocaleDateString(
+    "id-ID",
+    {
+      weekday:"long",
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    }
+  );
+}
+
+
+/* ---------- SHIO ---------- */
+
+function getZodiac(year){
+
+  const zodiac = [
+    "Monyet 🐒",
+    "Ayam 🐓",
+    "Anjing 🐕",
+    "Babi 🐖",
+    "Tikus 🐀",
+    "Kerbau 🐂",
+    "Macan 🐅",
+    "Kelinci 🐇",
+    "Naga 🐉",
+    "Ular 🐍",
+    "Kuda 🐎",
+    "Kambing 🐐"
+  ];
+
+  return zodiac[year % 12];
+}
+
+
+/* ---------- LUNAR NAME ---------- */
+
+function lunarMonthName(month){
+
+  const names = [
+    "",
+    "Bulan 1",
+    "Bulan 2",
+    "Bulan 3",
+    "Bulan 4",
+    "Bulan 5",
+    "Bulan 6",
+    "Bulan 7",
+    "Bulan 8",
+    "Bulan 9",
+    "Bulan 10",
+    "Bulan 11",
+    "Bulan 12"
+  ];
+
+  return names[Math.abs(month)] || "";
+}
+
+
+function lunarDayName(day){
+
+  const names = [
+    "",
+    "Tanggal 1",
+    "Tanggal 2",
+    "Tanggal 3",
+    "Tanggal 4",
+    "Tanggal 5",
+    "Tanggal 6",
+    "Tanggal 7",
+    "Tanggal 8",
+    "Tanggal 9",
+    "Tanggal 10",
+    "Tanggal 11",
+    "Tanggal 12",
+    "Tanggal 13",
+    "Tanggal 14",
+    "Tanggal 15",
+    "Tanggal 16",
+    "Tanggal 17",
+    "Tanggal 18",
+    "Tanggal 19",
+    "Tanggal 20",
+    "Tanggal 21",
+    "Tanggal 22",
+    "Tanggal 23",
+    "Tanggal 24",
+    "Tanggal 25",
+    "Tanggal 26",
+    "Tanggal 27",
+    "Tanggal 28",
+    "Tanggal 29",
+    "Tanggal 30"
+  ];
+
+  return names[day] || "";
+}
+
+
+/* ---------- TODAY ---------- */
+
+function updateToday(){
+
+  const now = new Date();
+
+  document.getElementById("todayDate").textContent =
+    formatDate(now);
+
+  try{
+
+    const lunar =
+      Solar.fromYmd(
+        now.getFullYear(),
+        now.getMonth()+1,
+        now.getDate()
+      ).getLunar();
+
+    const year = lunar.getYear();
+    const month = lunar.getMonth();
+    const day = lunar.getDay();
+
+    document.getElementById("todayLunar").textContent =
+      lunarMonthName(month) +
+      " • " +
+      lunarDayName(day);
+
+    document.getElementById("lunarYear").textContent =
+      year;
+
+    document.getElementById("zodiac").textContent =
+      getZodiac(year);
+
+    document.getElementById("moonPhase").textContent =
+      day===1
+        ? "🌑 Baru"
+        : day===15
+          ? "🌕 Purnama"
+          : "🌙 Lunar";
+
+
+    const reminder =
+      day===1
+        ? "🙏 Hari ini tanggal 1 Imlek. Jangan lupa sembahyang."
+        : day===15
+          ? "🌕 Hari ini tanggal 15 Imlek. Jangan lupa sembahyang."
+          : "Jangan sampai lupa sembahyang.";
+
+    document.getElementById("reminderText")
+      .textContent = reminder;
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById("todayLunar")
+      .textContent = "Lunar error";
+  }
+}
+
+
+/* ---------- FIND NEXT ---------- */
+
+function findNext(target){
+
+  const now = new Date();
+
+  for(let i=0;i<=40;i++){
+
+    const date = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()+i
+    );
+
+    try{
+
+      const lunar =
+        Solar.fromYmd(
+          date.getFullYear(),
+          date.getMonth()+1,
+          date.getDate()
+        ).getLunar();
+
+      if(lunar.getDay()===target){
+        return date;
+      }
+
+    }catch(error){}
+  }
+
+  return null;
+}
+
+
+/* ---------- COUNTDOWN ---------- */
+
+function updateCountdown(){
+
+  const first = findNext(1);
+  const fifteenth = findNext(15);
+
+  const now = new Date();
+
+  if(first){
+
+    const days = Math.max(
+      0,
+      Math.floor((first-now)/86400000)
+    );
+
+    document.getElementById("nextFirstText")
+      .textContent = days+" hari";
+
+    document.getElementById("nextFirstDate")
+      .textContent = formatDate(first);
+
+    document.getElementById("firstProgress")
+      .style.width =
+        Math.max(5,100-days/30*100)+"%";
+  }
+
+
+  if(fifteenth){
+
+    const days = Math.max(
+      0,
+      Math.floor((fifteenth-now)/86400000)
+    );
+
+    document.getElementById("nextFifteenthText")
+      .textContent = days+" hari";
+
+    document.getElementById("nextFifteenthDate")
+      .textContent = formatDate(fifteenth);
+
+    document.getElementById("fifteenthProgress")
+      .style.width =
+        Math.max(5,100-days/30*100)+"%";
+  }
+}
+
+
+/* ---------- ALARM ---------- */
+
+const alarmModal =
+  document.getElementById("alarmModal");
+
+document.getElementById("alarmBtn").onclick = () => {
+
+  alarmModal.classList.remove("hidden");
+
+  const saved =
+    localStorage.getItem("imlekAlarm");
+
+  if(saved){
+    document.getElementById("alarmTime")
+      .value = saved;
+  }
+};
+
+
+document.getElementById("closeModal").onclick = () => {
+  alarmModal.classList.add("hidden");
+};
+
+
+document.getElementById("saveAlarm").onclick = () => {
+
+  const time =
+    document.getElementById("alarmTime").value;
+
+  localStorage.setItem("imlekAlarm",time);
+
+  alarmModal.classList.add("hidden");
+
+  alert("Jam pengingat disimpan!");
+};
+
+
+/* Tutup modal jika klik area luar */
+
+alarmModal.onclick = e => {
+
+  if(e.target===alarmModal){
+    alarmModal.classList.add("hidden");
+  }
+};
+
+
+/* ---------- ICS ---------- */
+
+document.getElementById("icsBtn").onclick = () => {
+
+  const years = 10;
+  const now = new Date();
+
+  const endDate =
+    new Date(
+      now.getFullYear()+years,
+      now.getMonth(),
+      now.getDate()
+    );
+
+
+  let time =
+    localStorage.getItem("imlekAlarm") || "05:00";
+
+  let [hh,mm] =
+    time.split(":").map(Number);
+
+  if(isNaN(hh)) hh=5;
+  if(isNaN(mm)) mm=0;
+
+
+  function icsDate(date,h,m){
+
+    return (
+      date.getFullYear()+
+      pad(date.getMonth()+1)+
+      pad(date.getDate())+
+      "T"+
+      pad(h)+
+      pad(m)+
+      "00"
+    );
+  }
+
+
+  function makeEvent(title,date,uid){
+
+    const start =
+      icsDate(date,hh,mm);
+
+    const endDate =
+      new Date(date);
+
+    endDate.setHours(
+      hh+1,
+      mm,
+      0,
+      0
+    );
+
+    const end =
+      icsDate(
+        endDate,
+        endDate.getHours(),
+        endDate.getMinutes()
+      );
+
+
+    const stamp =
+      icsDate(
+        new Date(),
+        new Date().getHours(),
+        new Date().getMinutes()
+      );
+
+
+    return [
+      "BEGIN:VEVENT",
+      "UID:"+uid+"@imlek.local",
+      "DTSTAMP:"+stamp,
+      "DTSTART:"+start,
+      "DTEND:"+end,
+      "SUMMARY:"+title,
+      "DESCRIPTION:Pengingat Sembahyang Imlek dari IMLEK+",
+      "STATUS:CONFIRMED",
+      "BEGIN:VALARM",
+      "ACTION:DISPLAY",
+      "DESCRIPTION:"+title,
+      "TRIGGER:-PT0M",
+      "END:VALARM",
+      "END:VEVENT"
+    ].join("\r\n");
+  }
+
+
+  const events = [];
+
+  let current =
+    new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+
+
+  let count=0;
+
+
+  while(current<=endDate && count<300){
+
+    try{
+
+      const lunar =
+        Solar.fromYmd(
+          current.getFullYear(),
+          current.getMonth()+1,
+          current.getDate()
+        ).getLunar();
+
+      const day =
+        lunar.getDay();
+
+
+      if(day===1){
+
+        events.push(
+          makeEvent(
+            "🧧 Sembahyang Tanggal 1 Imlek",
+            new Date(current),
+            "tgl1-"+current.getTime()
+          )
+        );
+
+        count++;
+      }
+
+
+      if(day===15){
+
+        events.push(
+          makeEvent(
+            "🌕 Sembahyang Tanggal 15 Imlek",
+            new Date(current),
+            "tgl15-"+current.getTime()
+          )
+        );
+
+        count++;
+      }
+
+    }catch(error){}
+
+
+    current.setDate(
+      current.getDate()+1
+    );
+  }
+
+
+  if(!events.length){
+
+    alert("Gagal membuat file ICS.");
+    return;
+  }
+
+
+  const content = [
+
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//IMLEK+//ID",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "X-WR-CALNAME:IMLEK+ Reminder 10 Tahun",
+
+    ...events,
+
+    "END:VCALENDAR"
+
+  ].join("\r\n");
+
+
+  const blob =
+    new Blob(
+      [content],
+      {
+        type:"text/calendar;charset=utf-8"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href=url;
+  link.download=
+    "Imlek-Reminder-10-Tahun.ics";
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+
+
+  alert(
+    "Berhasil! File berisi "+
+    events.length+
+    " pengingat Tanggal 1 & 15 selama 10 tahun."
+  );
+};
+
+
+/* ---------- CALENDAR ---------- */
+
+let cy;
+let cm;
+
+
+const monthNames = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember"
+];
+
+
+function renderCal(){
+
+  const grid =
+    document.getElementById("calGrid");
+
+  grid.innerHTML="";
+
+
+  document.getElementById("calMonth")
+    .textContent =
+      monthNames[cm]+" "+cy;
+
+
+  try{
+
+    const lunar =
+      Solar.fromYmd(cy,cm+1,1)
+        .getLunar();
+
+    document.getElementById("calLunar")
+      .textContent =
+        "Lunar "+
+        lunar.getYear()+
+        " • "+
+        lunar.getMonthInChinese()+
+        "月";
+
+  }catch(error){}
+
+
+  const first =
+    new Date(cy,cm,1);
+
+  const last =
+    new Date(cy,cm+1,0);
+
+
+  const startDay =
+    first.getDay();
+
+
+  for(let i=0;i<startDay;i++){
+
+    const empty =
+      document.createElement("div");
+
+    empty.className="day empty";
+
+    grid.appendChild(empty);
+  }
+
+
+  const today =
+    new Date();
+
+
+  for(
+    let d=1;
+    d<=last.getDate();
+    d++
+  ){
+
+    const cell =
+      document.createElement("div");
+
+    cell.className="day";
+
+
+    const solar =
+      document.createElement("span");
+
+    solar.className="s";
+    solar.textContent=d;
+
+
+    const lunarText =
+      document.createElement("span");
+
+    lunarText.className="l";
+
+
+    try{
+
+      const lunar =
+        Solar.fromYmd(
+          cy,
+          cm+1,
+          d
+        ).getLunar();
+
+      const day =
+        lunar.getDay();
+
+
+      if(day===1){
+
+        lunarText.textContent="初一";
+        cell.classList.add("first");
+
+      }else if(day===15){
+
+        lunarText.textContent="十五";
+        cell.classList.add("full");
+
+      }else{
+
+        lunarText.textContent =
+          lunar.getDayInChinese();
+      }
+
+    }catch(error){
+
+      lunarText.textContent="-";
+    }
+
+
+    if(
+      d===today.getDate() &&
+      cm===today.getMonth() &&
+      cy===today.getFullYear()
+    ){
+
+      cell.classList.add("today");
+    }
+
+
+    cell.appendChild(solar);
+    cell.appendChild(lunarText);
+
+    grid.appendChild(cell);
+  }
+}
+
+
+/* ---------- CALENDAR BUTTONS ---------- */
+
+document.getElementById("prevMonth").onclick = () => {
+
+  cm--;
+
+  if(cm<0){
+
+    cm=11;
+    cy--;
+  }
+
+  renderCal();
+};
+
+
+document.getElementById("nextMonth").onclick = () => {
+
+  cm++;
+
+  if(cm>11){
+
+    cm=0;
+    cy++;
+  }
+
+  renderCal();
+};
+
+
+document.getElementById("todayBtn").onclick = () => {
+
+  const now =
+    new Date();
+
+  cy=now.getFullYear();
+  cm=now.getMonth();
+
+  renderCal();
+};
+
+
+/* ---------- START ---------- */
+
+const initialDate =
+  new Date();
+
+cy=initialDate.getFullYear();
+cm=initialDate.getMonth();
+
+updateToday();
+updateCountdown();
+renderCal();
+
+
+/* Update setiap menit */
+
+setInterval(() => {
+
+  updateToday();
+  updateCountdown();
+
+},60000);
+
+</script>
+
+</body>
+  </html>
